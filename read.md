@@ -14,3 +14,7 @@ npm install
 npm start
 
 
+rebuild
+
+make public
+npm run build
