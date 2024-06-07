@@ -48,6 +48,8 @@ Prerequisites:
 *   GNU make
 *   npm
 
+
+
 Local dev:
 
 ```bash
@@ -85,3 +87,37 @@ You'll need to update 3 files (search for BOSL2 for an example):
 - [LICENSE.md](./LICENSE.md): most libraries require proper disclosure of their usage and of their license. If a license is unique, paste it in full, otherwise, link to one of the standard ones already there.
 
 Send us a PR, then once it's merged request an update to the hosted https://ochafik.com/openscad2 demo.
+
+
+First Start :
+
+```bash
+sudo apt install wget
+
+sudo apt install make
+
+curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
+
+source ~/.bashrc
+
+nvm install node
+
+sudo apt install unzip
+
+cd 3DSkai-OpenSCAD
+
+npm install 
+
+make public
+
+npm start
+
+```
+
+rebuild
+
+```bash
+
+make public
+npm run build
+```
