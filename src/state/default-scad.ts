@@ -2,29 +2,9 @@
 
 export default `
 
-// Click on Render or hit F6 to do a fine-grained rendering.
-$fn=$preview ? 20 : 100;
-
-translate([-24,0,0]) {
-  union() {
-    cube(15, center=true);
-    sphere(10);
-  }
-}
-
-intersection() {
-  cube(15, center=true);
-  sphere(10);
-}
-
-translate([24,0,0]) {
-  difference() {
-    cube(15, center=true);
-    sphere(10);
-  }
-}
 
 translate([0, -30, -12])
   linear_extrude(1)
-    text("OpenSCAD Playground", halign="center", valign="center");
+    text("3DSKAI", halign="center", valign="center");
+
 `
