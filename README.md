@@ -31,7 +31,7 @@ Licenses: see [LICENSES](./LICENSE).
 - Proper Preview rendering: have OpenSCAD export the preview scene to a rich format (e.g. glTF, with some parts being translucent when prefixed w/ % modifier) and display it using https://modelviewer.dev/ maybe)
 - Model /home fs in shared state. have two clear paths: /libraries for builtins, and /home for user data. State pointing to /libraries paths needs not store the data except if there's overrides (flagged as modifications in the file picker)
 - Drag and drop of files (SCAD, STL, etc) and Zip archives. For assets, auto insert the corresponding import.
-- Fuller PWA support w/ link Sharing, File opening / association to *.scad files... 
+- Fuller PWA support w/ link Sharing, File opening / association to \*.scad files...
 - Look into accessibility
 - Setup [OPENSCADPATH](https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Libraries#Setting_OPENSCADPATH) env var w/ Emscripten to ensure examples that include assets / import local files will run fine.
 - Bundle more examples (ask users to contribute)
@@ -44,11 +44,10 @@ Licenses: see [LICENSES](./LICENSE).
 ## Building
 
 Prerequisites:
-*   wget
-*   GNU make
-*   npm
 
-
+- wget
+- GNU make
+- npm
 
 Local dev:
 
@@ -72,7 +71,7 @@ Deployment (edit "homepage" in `package.json` to match your deployment root!):
 make public
 npm run build
 
-rm -fR ../ochafik.github.io/openscad2 && cp -R dist ../ochafik.github.io/openscad2 
+rm -fR ../ochafik.github.io/openscad2 && cp -R dist ../ochafik.github.io/openscad2
 # Now commit and push changes, wait for site update and enjoy!
 ```
 
@@ -87,7 +86,6 @@ You'll need to update 3 files (search for BOSL2 for an example):
 - [LICENSE.md](./LICENSE.md): most libraries require proper disclosure of their usage and of their license. If a license is unique, paste it in full, otherwise, link to one of the standard ones already there.
 
 Send us a PR, then once it's merged request an update to the hosted https://ochafik.com/openscad2 demo.
-
 
 First Start :
 
@@ -106,7 +104,7 @@ sudo apt install unzip
 
 cd 3DSkai-OpenSCAD
 
-npm install 
+npm install
 
 make public
 
@@ -121,6 +119,3 @@ rebuild
 make public
 npm run build
 ```
-
-
-
