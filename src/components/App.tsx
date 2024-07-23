@@ -9,6 +9,7 @@ import Footer from './Footer';
 import { ModelContext, FSContext } from './contexts';
 import PanelSwitcher from './PanelSwitcher';
 import { ConfirmDialog } from 'primereact/confirmdialog';
+import CustomizerPanel from './CustomizerPanel';
 
 
 // import "primereact/resources/themes/lara-light-indigo/theme.css";
@@ -21,6 +22,22 @@ export function App({initialState, statePersister, fs}: {initialState: State, st
   const model = new Model(fs, state, setState, statePersister);
   useEffect(() => model.init());
 
+  useEffect(() => {
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'F5') {
+        event.preventDefault();
+        model.render({isPreview: true, now: true})
+      } else if (event.key === 'F6') {
+        event.preventDefault();
+        model.render({isPreview: false, now: true})
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => {
+      window.removeEventListener('keydown', handleKeyDown);
+    };
+  }, []);
+
   const zIndexOfPanelsDependingOnFocus = {
     editor: {
       editor: 3,
@@ -30,11 +47,11 @@ export function App({initialState, statePersister, fs}: {initialState: State, st
     viewer: {
       editor: 2,
       viewer: 3,
-      customizer: 2,
+      customizer: 1,
     },
     customizer: {
       editor: 0,
-      viewer: 0,
+      viewer: 1,
       customizer: 3,
     }
   }
@@ -78,7 +95,11 @@ export function App({initialState, statePersister, fs}: {initialState: State, st
               ${layout.mode === 'single' ? 'absolute-fill' : ''}
             `} style={getPanelStyle('editor')} />
             <ViewerPanel className={layout.mode === 'single' ? `absolute-fill` : ''} style={getPanelStyle('viewer')} />
-            {/* <CustomizerPanel className={`${getPanelClasses('customizer')} absolute-fill`} style={getPanelStyle('customizer')} /> */}
+            <CustomizerPanel className={`
+              opacity-animated
+              ${layout.mode === 'single' && layout.focus !== 'customizer' ? 'opacity-0' : ''}
+              ${layout.mode === 'single' ? `absolute-fill` : ''}
+            `} style={getPanelStyle('customizer')} />
           </div>
 
           <Footer />

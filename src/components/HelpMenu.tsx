@@ -25,23 +25,30 @@ export default function HelpMenu() {
         {
           label: 'OpenSCAD Docs',
           icon: 'pi pi-book',
-          url: 'http://openscad.org/documentation.html',
+          url: 'https://openscad.org/documentation.html',
           target: '_blank'
         },
         {
+          label: 'Customizer Syntax',
+          icon: 'pi pi-book',
+          url: 'https://en.wikibooks.org/wiki/OpenSCAD_User_Manual/Customizer',
+          target: '_blank'
+        },
+        
+        {
           label: 'OpenSCAD Cheatsheet',
           icon: 'pi pi-palette',
-          url: 'http://openscad.org/cheatsheet/',
+          url: 'https://openscad.org/cheatsheet/',
           target: '_blank'
         },
         {
           label: 'BOSL2 Cheatsheet',
           icon: 'pi pi-palette',
-          url: 'https://github.com/revarbat/BOSL2/wiki/CheatSheet',
+          url: 'https://github.com/BelfrySCAD/BOSL2/wiki/CheatSheet',
           target: '_blank'
         },
       ] as MenuItem[]} popup ref={menuRef} />
-      {/* <Button title="Help & Licenses" rounded icon="pi pi-question-circle" onClick={(e) => menuRef.current && menuRef.current.toggle(e)} /> */}
+      <Button title="Help & Licenses" rounded icon="pi pi-question-circle" onClick={(e) => menuRef.current && menuRef.current.toggle(e)} />
     </>
   );
 }

@@ -54,12 +54,12 @@ export const zipArchives: ZipArchives = {
     description: 'The Belfry OpenScad Library, v2.0',
     gitOrigin: {
       branch: 'master',
-      repoUrl: 'https://github.com/revarbat/BOSL2',
+      repoUrl: 'https://github.com/BelfrySCAD/BOSL2',
       include: [{glob: ['**/*.scad', 'LICENSE']}],
     },
     docs: {
-      'CheatSheet': 'https://github.com/revarbat/BOSL2/wiki/CheatSheet',
-      'Wiki': 'https://github.com/revarbat/BOSL2/wiki',
+      'CheatSheet': 'https://github.com/BelfrySCAD/BOSL2/wiki/CheatSheet',
+      'Wiki': 'https://github.com/BelfrySCAD/BOSL2/wiki',
     },
   },
   'NopSCADlib': {
@@ -171,6 +171,15 @@ export const zipArchives: ZipArchives = {
     },
     symlinks: {'tray.scad': 'tray.scad'},
   },
+  'lasercut': {
+    description: 'Module for OpenSCAD, allowing 3D models to be created from 2D lasercut parts.',
+    gitOrigin: {
+      branch: 'master',
+      repoUrl: 'https://github.com/bmsleight/lasercut',
+      include: [{glob: ['**/*.scad', 'LICENSE']}],
+    },
+    symlinks: {'lasercut.scad': 'lasercut.scad'},
+  },    
   'YAPP_Box': {
     description: 'Yet Another Parametric Projectbox Box',
     gitOrigin: {

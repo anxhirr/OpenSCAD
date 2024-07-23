@@ -1,25 +1,27 @@
 // Portions of this file are Copyright 2021 Google LLC, and licensed under GPL2+. See COPYING.
 
 import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
-import { getFileName, getParentDir } from '../fs/filesystem';
+import { getParentDir } from '../fs/filesystem';
 import { spawnOpenSCAD } from "./openscad-runner";
 import { processMergedOutputs } from "./output-parser";
 import { AbortablePromise, turnIntoDelayableExecution } from '../utils';
+import { ParameterSet } from '../state/customizer-types';
 
 const syntaxDelay = 300;
 
-type SyntaxCheckOutput = {logText: string, markers: monaco.editor.IMarkerData[]};
+type SyntaxCheckOutput = {logText: string, markers: monaco.editor.IMarkerData[], parameterSet?: ParameterSet};
 export const checkSyntax =
   turnIntoDelayableExecution(syntaxDelay, (source: string, sourcePath: string) => {
     // const timestamp = Date.now(); 
     
     source = '$preview=true;\n' + source;
-    sourcePath = getFileName(sourcePath);
 
+    const outFile = 'out.json';
     const job = spawnOpenSCAD({
       inputs: [[sourcePath, source + '\n']],
-      args: [sourcePath, "-o", "out.ast"],
+      args: [sourcePath, "-o", outFile, "--export-format=param"],
       // workingDir: sourcePath.startsWith('/') ? getParentDir(sourcePath) : '/home'
+      outputPaths: [outFile],
     });
 
     return AbortablePromise<SyntaxCheckOutput>((res, rej) => {
@@ -27,10 +29,28 @@ export const checkSyntax =
         try {
           const result = await job;
           // console.log(result);
-          res(processMergedOutputs(result.mergedOutputs, {shiftSourceLines: {
-            sourcePath,
-            skipLines: 1,
-          }}));
+
+          let parameterSet: ParameterSet | undefined = undefined;
+          if (result.outputs && result.outputs.length == 1) {
+            let [[, content]] = result.outputs;
+            content = new TextDecoder().decode(content as any);
+            try {
+              parameterSet = JSON.parse(content)
+              // console.log('PARAMETER SET', JSON.stringify(parameterSet, null, 2))
+            } catch (e) {
+              console.error(`Error while parsing parameter set: ${e}\n${content}`);
+            }
+          } else {
+            console.error('No output from runner!');
+          }
+
+          res({
+            ...processMergedOutputs(result.mergedOutputs, {shiftSourceLines: {
+              sourcePath,
+              skipLines: 1,
+            }}),
+            parameterSet,
+          });
         } catch (e) {
           console.error(e);
           rej(e);
@@ -46,24 +66,35 @@ export type RenderOutput = {stlFile: File, logText: string, markers: monaco.edit
 export type RenderArgs = {
   source: string,
   sourcePath: string,
+  vars?: {[name: string]: any},
   features?: string[],
   extraArgs?: string[],
   isPreview: boolean
 }
+
+function formatValue(any: any): string {
+  if (typeof any === 'string') {
+    return `"${any}"`;
+  } else if (any instanceof Array) {
+    return `[${any.map(formatValue).join(', ')}]`;
+  } else {
+    return `${any}`;
+  }
+}
 export const render =
- turnIntoDelayableExecution(renderDelay, ({sourcePath, source, isPreview, features, extraArgs}: RenderArgs) => {
+ turnIntoDelayableExecution(renderDelay, ({sourcePath, source, isPreview, vars, features, extraArgs}: RenderArgs) => {
 
     const prefixLines: string[] = [];
     if (isPreview) {
       prefixLines.push('$preview=true;');
     }
     source = [...prefixLines, source].join('\n');
-    sourcePath = getFileName(sourcePath);
 
     const args = [
       sourcePath,
       "-o", "out.stl",
       "--export-format=binstl",
+      ...(Object.entries(vars ?? {}).flatMap(([k, v]) => [`-D${k}=${formatValue(v)}`])),
       ...(features ?? []).map(f => `--enable=${f}`),
       ...(extraArgs ?? [])
     ]
