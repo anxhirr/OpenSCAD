@@ -5,13 +5,13 @@ SINGLE_BRANCH_MAIN=--branch main --single-branch
 SINGLE_BRANCH=--branch master --single-branch
 SHALLOW=--depth 1
 
-SHELL:=/bin/bash
+SHELL:=/usr/bin/env bash
 
 all: public
 
 .PHONY: public
 public: \
-		libs/openscad-wasm \
+		src/wasm \
 		public/openscad.js \
 		public/openscad.wasm \
 		public/libraries/fonts.zip \
@@ -33,7 +33,8 @@ public: \
 		public/libraries/pathbuilder.zip \
 		public/libraries/openscad_attachable_text3d.zip \
 		public/libraries/brailleSCAD.zip \
-		public/libraries/UB.scad.zip
+		public/libraries/UB.scad.zip \
+		public/libraries/lasercut.zip
 
 clean:
 	rm -fR libs build
@@ -49,25 +50,82 @@ dist/index.js: public
 dist/openscad-worker.js: src/openscad-worker.ts
 	npx rollup -c
 
+src/wasm: libs/openscad-wasm
+	rm -f src/wasm
+	ln -sf "$(shell pwd)/libs/openscad-wasm" src/wasm
+
 libs/openscad-wasm:
 	mkdir -p libs/openscad-wasm
 	wget ${WASM_BUILD_URL} -O libs/openscad-wasm.zip
 	( cd libs/openscad-wasm && unzip ../openscad-wasm.zip )
-	rm libs/openscad-wasm.zip
-	rm -f src/wasm
-	ln -sf "$(shell pwd)/libs/openscad-wasm" src/wasm
 	
-public/openscad.js: libs/openscad-wasm
-	cp libs/openscad-wasm/openscad.{js,wasm} public
+public/openscad.js: libs/openscad-wasm libs/openscad-wasm/openscad.js
+	ln -sf libs/openscad-wasm/openscad.js public/openscad.js
 		
-public/openscad.wasm: libs/openscad-wasm
-	cp libs/openscad-wasm/openscad.wasm public
+public/openscad.wasm: libs/openscad-wasm libs/openscad-wasm/openscad.wasm
+	ln -sf libs/openscad-wasm/openscad.wasm public/openscad.wasm
 
-public/libraries/fonts.zip: libs/liberation
-	mkdir -p public/libraries
-	cp fonts.conf libs/liberation
-	( cd libs/liberation && zip -r ../../public/libraries/fonts.zip fonts.conf *.ttf LICENSE AUTHORS )
+# Var w/ noto fonts
+NOTO_FONTS=\
+	libs/noto/NotoNaskhArabic-Bold.ttf \
+	libs/noto/NotoNaskhArabic-Regular.ttf \
+	libs/noto/NotoSans-Bold.ttf \
+	libs/noto/NotoSans-Italic.ttf \
+	libs/noto/NotoSans-Regular.ttf \
+	libs/noto/NotoSansArmenian-Bold.ttf \
+	libs/noto/NotoSansArmenian-Regular.ttf \
+	libs/noto/NotoSansBalinese-Regular.ttf \
+	libs/noto/NotoSansBengali-Bold.ttf \
+	libs/noto/NotoSansBengali-Regular.ttf \
+	libs/noto/NotoSansDevanagari-Bold.ttf \
+	libs/noto/NotoSansDevanagari-Regular.ttf \
+	libs/noto/NotoSansEthiopic-Bold.ttf \
+	libs/noto/NotoSansEthiopic-Regular.ttf \
+	libs/noto/NotoSansGeorgian-Bold.ttf \
+	libs/noto/NotoSansGeorgian-Regular.ttf \
+	libs/noto/NotoSansGujarati-Bold.ttf \
+	libs/noto/NotoSansGujarati-Regular.ttf \
+	libs/noto/NotoSansGurmukhi-Bold.ttf \
+	libs/noto/NotoSansGurmukhi-Regular.ttf \
+	libs/noto/NotoSansHebrew-Bold.ttf \
+	libs/noto/NotoSansHebrew-Regular.ttf \
+	libs/noto/NotoSansJavanese-Regular.ttf \
+	libs/noto/NotoSansKannada-Bold.ttf \
+	libs/noto/NotoSansKannada-Regular.ttf \
+	libs/noto/NotoSansKhmer-Bold.ttf \
+	libs/noto/NotoSansKhmer-Regular.ttf \
+	libs/noto/NotoSansLao-Bold.ttf \
+	libs/noto/NotoSansLao-Regular.ttf \
+	libs/noto/NotoSansMongolian-Regular.ttf \
+	libs/noto/NotoSansMyanmar-Bold.ttf \
+	libs/noto/NotoSansMyanmar-Regular.ttf \
+	libs/noto/NotoSansOriya-Bold.ttf \
+	libs/noto/NotoSansOriya-Regular.ttf \
+	libs/noto/NotoSansSinhala-Bold.ttf \
+	libs/noto/NotoSansSinhala-Regular.ttf \
+	libs/noto/NotoSansTamil-Bold.ttf \
+	libs/noto/NotoSansTamil-Regular.ttf \
+	libs/noto/NotoSansThai-Bold.ttf \
+	libs/noto/NotoSansThai-Regular.ttf \
+	libs/noto/NotoSansTibetan-Bold.ttf \
+	libs/noto/NotoSansTibetan-Regular.ttf \
+	libs/noto/NotoSansTifinagh-Regular.ttf \
 
+# Way too big for now, also can't make them work yet:
+# libs/noto/NotoSansCJKtc-Bold.otf
+# libs/noto/NotoSansCJKtc-Regular.otf
+
+public/libraries/fonts.zip: $(NOTO_FONTS) libs/liberation
+	zip -r $@ -j fonts.conf libs/noto/{*.ttf,*.otf} libs/liberation/{*.ttf,LICENSE,AUTHORS}
+
+libs/noto/%.ttf:
+	mkdir -p libs/noto
+	wget https://github.com/openmaptiles/fonts/raw/master/noto-sans/$(notdir $@) -O $@
+	
+libs/noto/%.otf:
+	mkdir -p libs/noto
+	wget https://github.com/openmaptiles/fonts/raw/master/noto-sans/$(notdir $@) -O $@
+	
 libs/liberation:
 	git clone --recurse https://github.com/shantigilbert/liberation-fonts-ttf.git ${SHALLOW} ${SINGLE_BRANCH} $@
 
@@ -79,7 +137,7 @@ public/libraries/openscad.zip: libs/openscad
 	( cd libs/openscad ; zip -r ../../public/libraries/openscad.zip `find examples -name '*.scad' | grep -v tests` )
 
 libs/BOSL2: 
-	git clone --recurse https://github.com/revarbat/BOSL2.git ${SHALLOW} ${SINGLE_BRANCH} $@
+	git clone --recurse https://github.com/BelfrySCAD/BOSL2.git ${SHALLOW} ${SINGLE_BRANCH} $@
 
 public/libraries/BOSL2.zip: libs/BOSL2
 	mkdir -p public/libraries
@@ -97,7 +155,7 @@ libs/NopSCADlib:
 
 public/libraries/NopSCADlib.zip: libs/NopSCADlib
 	mkdir -p public/libraries
-	( cd libs/NopSCADlib ; zip -r ../../public/libraries/NopSCADlib.zip `find . -name '*.scad' | grep -v tests` COPYING )
+	( cd libs/NopSCADlib ; zip -r ../../public/libraries/NopSCADlib.zip `find . -name '*.scad'` COPYING )
 
 libs/funcutils: 
 	git clone --recurse https://github.com/thehans/funcutils.git ${SHALLOW} ${SINGLE_BRANCH} $@
@@ -210,3 +268,10 @@ libs/openscad-tray:
 public/libraries/openscad-tray.zip: libs/openscad-tray
 	mkdir -p public/libraries
 	( cd libs/openscad-tray ; zip -r ../../public/libraries/openscad-tray.zip *.scad LICENSE )
+	
+libs/lasercut:
+	git clone --recurse https://github.com/bmsleight/lasercut.git ${SHALLOW} ${SINGLE_BRANCH} $@
+public/libraries/lasercut.zip: libs/lasercut
+	mkdir -p public/libraries
+	( cd libs/lasercut ; zip -r ../../public/libraries/lasercut.zip *.scad LICENSE )
+	
