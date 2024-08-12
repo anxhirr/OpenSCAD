@@ -4,7 +4,7 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>OpenSCAD Playground</title>
+  <title>3DSKAI Playground</title>
   <meta name="description"
     content="OpenSCAD Playground: edit .scad models and render them to STL from the browser (WebAssembly build OpenSCAD, with Monaco editor and STL Viewer)">
 
@@ -51,6 +51,7 @@
 
       height: 100vh;
       height: var(--app-height);
+      background: linear-gradient(45deg, #000000 0%, #1f222e 100%);
     }
 
     .p-tabmenu-nav {
@@ -127,11 +128,11 @@
 </head>
 
 <body>
-  <audio id="complete-sound">
+  <!-- <audio id="complete-sound">
     <source src="complete.wav" type="audio/wav">
     Your browser does not support the audio element.
-  </audio>
-  <noscript>You need to enable JavaScript to run the OpenSCAD Playground.</noscript>
+  </audio> -->
+  <!-- <noscript>You need to enable JavaScript to run the OpenSCAD Playground.</noscript> -->
   <div id="root"></div>
 </body>
 
