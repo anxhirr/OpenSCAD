@@ -119,3 +119,14 @@ rebuild
 make public
 npm run build
 ```
+
+if you got an error like somithing with the zip
+try this
+
+# Ensure output directory exists
+
+mkdir -p public/libraries
+
+# Create ZIP file
+
+zip -r public/libraries/fonts.zip -j fonts.conf libs/noto/_.ttf libs/liberation/{_.ttf,LICENSE,AUTHORS}
