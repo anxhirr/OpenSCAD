@@ -1,46 +1,110 @@
 // Portions of this file are Copyright 2021 Google LLC, and licensed under GPL2+. See COPYING.
 
-import * as monaco from 'monaco-editor/esm/vs/editor/editor.api';
+import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 
 const builtInFunctionNames = [
-  'abs',
-    'acos', 'asin', 'atan', 'atan2', 'ceil',
-    'len', 'let', 'ln', 'log',
-    'lookup', 'max', 'min', 'sqrt', 'tan', 'rands',
-    'search', 'sign', 'sin', 'str', 'norm', 'pow', 
-    'concat', 'cos', 'cross', 'floor', 'exp', 
-    'chr',
+  "abs",
+  "acos",
+  "asin",
+  "atan",
+  "atan2",
+  "ceil",
+  "len",
+  "let",
+  "ln",
+  "log",
+  "lookup",
+  "max",
+  "min",
+  "sqrt",
+  "tan",
+  "rands",
+  "search",
+  "sign",
+  "sin",
+  "str",
+  "norm",
+  "pow",
+  "concat",
+  "cos",
+  "cross",
+  "floor",
+  "exp",
+  "chr",
 ];
 const builtInModuleNames = [
-  'children',
-  'circle', 'color', 'cube', 'cylinder',
-  'diameter', 'difference', 'echo', 'extrude', 
-  'for', 'function', 'hull', 'if', 'include',
-  'intersection_for', 'intersection',  'linear',  'minkowski', 'mirror', 'module', 'multmatrix',
-  'offset', 'polyhedron', 'projection', 'radius', 
-  'render', 'resize', 'rotate', 'round', 'scale', 
-  'sphere', 'square', 'surface', 'translate', 
-  'union', 'use', 'value', 'version', 
-  // 'center', 'width', 'height', 
+  "children",
+  "circle",
+  "color",
+  "cube",
+  "cylinder",
+  "diameter",
+  "difference",
+  "echo",
+  "extrude",
+  "for",
+  "function",
+  "hull",
+  "if",
+  "include",
+  "intersection_for",
+  "intersection",
+  "linear",
+  "minkowski",
+  "mirror",
+  "module",
+  "multmatrix",
+  "offset",
+  "polyhedron",
+  "projection",
+  "radius",
+  "render",
+  "resize",
+  "rotate",
+  "round",
+  "scale",
+  "sphere",
+  "square",
+  "surface",
+  "translate",
+  "union",
+  "use",
+  "value",
+  "version",
+  // 'center', 'width', 'height',
 ];
 const builtInVarNames = [
-  'false', 'true', 'PI', 'undef', '$children',
-  '$fa', '$fn', '$fs', '$t', '$vpd', '$vpr', '$vpt',
-]
+  "false",
+  "true",
+  "PI",
+  "undef",
+  "$children",
+  "$fa",
+  "$fn",
+  "$fs",
+  "$t",
+  "$vpd",
+  "$vpr",
+  "$vpt",
+];
 
 var conf: monaco.languages.LanguageConfiguration = {
+  colorizedBracketPairs: [
+    ["{", "}"],
+    ["(", ")"],
+    ["[", "]"],
+  ],
 
-  colorizedBracketPairs: [['{', '}'], ['(', ')'], ['[', ']']], 
-  
-  wordPattern: /(-?\d*\.\d\w*)|([^\`\~\!\@\#\%\^\&\*\(\)\-\=\+\[\{\]\}\\\|\;\:\'\"\,\.\<\>\/\?\s]+)/g,
+  wordPattern:
+    /(-?\d*\.\d\w*)|([^\`\~\!\@\#\%\^\&\*\(\)\-\=\+\[\{\]\}\\\|\;\:\'\"\,\.\<\>\/\?\s]+)/g,
   comments: {
     lineComment: "//",
-    blockComment: ["/*", "*/"]
+    blockComment: ["/*", "*/"],
   },
   brackets: [
     ["{", "}"],
     ["[", "]"],
-    ["(", ")"]
+    ["(", ")"],
   ],
   onEnterRules: [
     {
@@ -48,30 +112,30 @@ var conf: monaco.languages.LanguageConfiguration = {
       afterText: /^\s*\*\/$/,
       action: {
         indentAction: monaco.languages.IndentAction.IndentOutdent,
-        appendText: " * "
-      }
+        appendText: " * ",
+      },
     },
     {
       beforeText: /^\s*\/\*\*(?!\/)([^\*]|\*(?!\/))*$/,
       action: {
         indentAction: monaco.languages.IndentAction.None,
-        appendText: " * "
-      }
+        appendText: " * ",
+      },
     },
     {
       beforeText: /^(\t|(\ \ ))*\ \*(\ ([^\*]|\*(?!\/))*)?$/,
       action: {
         indentAction: monaco.languages.IndentAction.None,
-        appendText: "* "
-      }
+        appendText: "* ",
+      },
     },
     {
       beforeText: /^(\t|(\ \ ))*\ \*\/\s*$/,
       action: {
         indentAction: monaco.languages.IndentAction.None,
-        removeText: 1
-      }
-    }
+        removeText: 1,
+      },
+    },
   ],
   autoClosingPairs: [
     { open: "{", close: "}" },
@@ -80,20 +144,25 @@ var conf: monaco.languages.LanguageConfiguration = {
     { open: '"', close: '"', notIn: ["string"] },
     { open: "'", close: "'", notIn: ["string", "comment"] },
     { open: "`", close: "`", notIn: ["string", "comment"] },
-    { open: "/**", close: " */", notIn: ["string"] }
+    { open: "/**", close: " */", notIn: ["string"] },
   ],
   folding: {
     markers: {
       start: new RegExp("^\\s*//\\s*#?region\\b"),
-      end: new RegExp("^\\s*//\\s*#?endregion\\b")
-    }
-  }
+      end: new RegExp("^\\s*//\\s*#?endregion\\b"),
+    },
+  },
 };
 
 var language: monaco.languages.IMonarchLanguage = {
   defaultToken: "invalid",
   tokenPostfix: ".js",
-  keywords: [...builtInFunctionNames, ...builtInModuleNames, ...builtInVarNames, 'each'],
+  keywords: [
+    ...builtInFunctionNames,
+    ...builtInModuleNames,
+    ...builtInVarNames,
+    "each",
+  ],
   typeKeywords: [],
   operators: [
     "<=",
@@ -130,9 +199,9 @@ var language: monaco.languages.IMonarchLanguage = {
         {
           cases: {
             "@keywords": "keyword",
-            "@default": "identifier"
-          }
-        }
+            "@default": "identifier",
+          },
+        },
       ],
       [/[A-Z][\w\$]*/, "type.identifier"],
       { include: "@whitespace" },
@@ -144,9 +213,9 @@ var language: monaco.languages.IMonarchLanguage = {
         {
           cases: {
             "@operators": "delimiter",
-            "@default": ""
-          }
-        }
+            "@default": "",
+          },
+        },
       ],
       [/(@digits)[eE]([\-+]?(@digits))?/, "number.float"],
       [/(@digits)\.(@digits)([eE][\-+]?(@digits))?/, "number.float"],
@@ -159,28 +228,28 @@ var language: monaco.languages.IMonarchLanguage = {
     whitespace: [
       [/[ \t\r\n]+/, ""],
       [/\/\*/, "comment", "@comment"],
-      [/\/\/.*$/, "comment"]
+      [/\/\/.*$/, "comment"],
     ],
     comment: [
       [/[^\/*]+/, "comment"],
       [/\*\//, "comment", "@pop"],
-      [/[\/*]/, "comment"]
+      [/[\/*]/, "comment"],
     ],
     string_double: [
       [/[^\\"]+/, "string"],
       [/@escapes/, "string.escape"],
       [/\\./, "string.escape.invalid"],
-      [/"/, "string", "@pop"]
+      [/"/, "string", "@pop"],
     ],
     bracketCounting: [
       [/\{/, "delimiter.bracket", "@bracketCounting"],
       [/\}/, "delimiter.bracket", "@pop"],
-      { include: "common" }
-    ]
-  }
+      { include: "common" },
+    ],
+  },
 };
 
 export default {
   conf,
   language,
-}
+};

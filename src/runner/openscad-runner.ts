@@ -3,7 +3,13 @@
 import { MergedOutputs } from "./openscad-worker";
 import { AbortablePromise } from "../utils";
 
-export function createWasmMemory({maximumMegabytes, maximumBytes}: {maximumMegabytes: number, maximumBytes: number}) {
+export function createWasmMemory({
+  maximumMegabytes,
+  maximumBytes,
+}: {
+  maximumMegabytes: number;
+  maximumBytes: number;
+}) {
   const pageSize = 64 * 1024; // 64KB
   if (!maximumBytes) {
     maximumBytes = maximumMegabytes * 1024 * 1024;
@@ -17,21 +23,23 @@ export function createWasmMemory({maximumMegabytes, maximumBytes}: {maximumMegab
 
 // Output is {outputs: [name, content][], mergedOutputs: [{(stderr|stdout|error)?: string}], exitCode: number}
 export type OpenSCADInvocation = {
-  wasmMemory?: WebAssembly.Memory,
+  wasmMemory?: WebAssembly.Memory;
   // workingDir: string,
-  inputs?: [string, string][],
-  args: string[],
-  outputPaths?: string[],
-}
+  inputs?: [string, string][];
+  args: string[];
+  outputPaths?: string[];
+};
 export type OpenSCADInvocationResults = {
-  exitCode: number,
-  error?: string,
-  outputs?: [string, string][],
-  mergedOutputs: MergedOutputs,
-  elapsedMillis: number,
-}
+  exitCode: number;
+  error?: string;
+  outputs?: [string, string][];
+  mergedOutputs: MergedOutputs;
+  elapsedMillis: number;
+};
 
-export function spawnOpenSCAD(invocation: OpenSCADInvocation): AbortablePromise<OpenSCADInvocationResults> {
+export function spawnOpenSCAD(
+  invocation: OpenSCADInvocation
+): AbortablePromise<OpenSCADInvocationResults> {
   var worker: Worker | null;
   var rejection: (err: any) => void;
 
@@ -42,21 +50,21 @@ export function spawnOpenSCAD(invocation: OpenSCADInvocation): AbortablePromise<
     worker.terminate();
     worker = null;
   }
-    
+
   return AbortablePromise<OpenSCADInvocationResults>((resolve, reject) => {
-    worker = new Worker('./openscad-worker.js');//, {type: "module"})
+    worker = new Worker("./openscad-worker.js"); //, {type: "module"})
     // if (navigator.userAgent.indexOf(' Chrome/') < 0) {
     //   worker = new Worker('./openscad-worker-firefox.js'); // {'type': 'module'}
     // } else {
     //   worker = new Worker('./openscad-worker.js', {'type': 'module'});
     // }
     rejection = reject;
-    worker.onmessage = (e: {data: OpenSCADInvocationResults}) => {
+    worker.onmessage = (e: { data: OpenSCADInvocationResults }) => {
       resolve(e.data);
       terminate();
-    }
-    worker.postMessage(invocation)
-    
+    };
+    worker.postMessage(invocation);
+
     return () => {
       // rejection({error: 'Terminated'});
       terminate();

@@ -3,18 +3,25 @@
 import OpenSCAD from "../wasm/openscad.js";
 
 import { createEditorFS, symlinkLibraries } from "../fs/filesystem";
-import { OpenSCADInvocation, OpenSCADInvocationResults } from "./openscad-runner";
+import {
+  OpenSCADInvocation,
+  OpenSCADInvocationResults,
+} from "./openscad-runner";
 import { deployedArchiveNames, zipArchives } from "../fs/zip-archives";
-declare var BrowserFS: BrowserFSInterface
+declare var BrowserFS: BrowserFSInterface;
 
 importScripts("browserfs.min.js");
 // importScripts("https://cdnjs.cloudflare.com/ajax/libs/BrowserFS/2.0.0/browserfs.min.js");
 
-export type MergedOutputs = {stdout?: string, stderr?: string, error?: string}[];
+export type MergedOutputs = {
+  stdout?: string;
+  stderr?: string;
+  error?: string;
+}[];
 
-addEventListener('message', async (e) => {
-
-  const { inputs, args, outputPaths, wasmMemory } = e.data as OpenSCADInvocation;
+addEventListener("message", async (e) => {
+  const { inputs, args, outputPaths, wasmMemory } =
+    e.data as OpenSCADInvocation;
 
   const mergedOutputs: MergedOutputs = [];
   try {
@@ -22,38 +29,43 @@ addEventListener('message', async (e) => {
       wasmMemory,
       buffer: wasmMemory && wasmMemory.buffer,
       noInitialRun: true,
-      'print': (text: string) => {
-        console.debug('stdout: ' + text);
-        mergedOutputs.push({ stdout: text })
+      print: (text: string) => {
+        console.debug("stdout: " + text);
+        mergedOutputs.push({ stdout: text });
       },
-      'printErr': (text: string) => {
-        console.debug('stderr: ' + text);
-        mergedOutputs.push({ stderr: text })
+      printErr: (text: string) => {
+        console.debug("stderr: " + text);
+        mergedOutputs.push({ stderr: text });
       },
     });
 
     // This will mount lots of libraries' ZIP archives under /libraries/<name> -> <name>.zip
-    await createEditorFS({prefix: '', allowPersistence: false});
-    
-    instance.FS.mkdir('/libraries');
-    
+    await createEditorFS({ prefix: "", allowPersistence: false });
+
+    instance.FS.mkdir("/libraries");
+
     // https://github.com/emscripten-core/emscripten/issues/10061
     const BFS = new BrowserFS.EmscriptenFS(
       instance.FS,
       instance.PATH ?? {
         join2: (a: string, b: string) => `${a}/${b}`,
-        join: (...args: string[]) => args.join('/'),
+        join: (...args: string[]) => args.join("/"),
       },
       instance.ERRNO_CODES ?? {}
     );
-      
-    instance.FS.mount(BFS, {root: '/'}, '/libraries');
 
-    await symlinkLibraries(deployedArchiveNames, instance.FS, '/libraries', "/");
+    instance.FS.mount(BFS, { root: "/" }, "/libraries");
+
+    await symlinkLibraries(
+      deployedArchiveNames,
+      instance.FS,
+      "/libraries",
+      "/"
+    );
 
     // Fonts are seemingly resolved from $(cwd)/fonts
     instance.FS.chdir("/");
-    
+
     if (inputs) {
       for (const [path, content] of inputs) {
         try {
@@ -65,14 +77,14 @@ addEventListener('message', async (e) => {
         }
       }
     }
-    
-    console.log('Invoking OpenSCAD with: ', args)
+
+    console.log("Invoking OpenSCAD with: ", args);
     const start = performance.now();
     const exitCode = instance.callMain(args);
     const end = performance.now();
 
     const outputs: [string, string][] = [];
-    for (const path of (outputPaths ?? [])) {
+    for (const path of outputPaths ?? []) {
       try {
         const content = instance.FS.readFile(path);
         outputs.push([path, content]);
@@ -84,14 +96,14 @@ addEventListener('message', async (e) => {
       outputs,
       mergedOutputs,
       exitCode,
-      elapsedMillis: end - start
-    }
+      elapsedMillis: end - start,
+    };
 
     console.debug(result);
 
     postMessage(result);
-  } catch (e) { 
-    console.trace(e);//, e instanceof Error ? e.stack : '');
+  } catch (e) {
+    console.trace(e); //, e instanceof Error ? e.stack : '');
     const error = `${e}`;
     mergedOutputs.push({ error });
     postMessage({

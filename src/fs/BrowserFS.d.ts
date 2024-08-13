@@ -8,18 +8,18 @@ declare interface FS {
   readdirSync(path: string): string[];
   symlink(target: string, source: string): void;
   readFileSync(path: string): BufferSource;
-  lstatSync(path: string): {isDirectory(): boolean};
+  lstatSync(path: string): { isDirectory(): boolean };
 }
 
 declare interface EmscriptenFS extends FS {}
 
 declare type BrowserFSInterface = {
-  BFSRequire: (name: string) => any,
+  BFSRequire: (name: string) => any;
 
-  install: (windowOrSelf: Window) => void,
-  configure: (options: any, callback: (e?: any) => void) => void,
+  install: (windowOrSelf: Window) => void;
+  configure: (options: any, callback: (e?: any) => void) => void;
 
   EmscriptenFS: {
-    new(fs: FS, path: string, errnoCodes: object): EmscriptenFS
-  }
+    new (fs: FS, path: string, errnoCodes: object): EmscriptenFS;
+  };
 };

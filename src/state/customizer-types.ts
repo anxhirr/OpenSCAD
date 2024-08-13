@@ -7,11 +7,11 @@ export type BaseParameter = {
   caption: string;
   group: string;
   name: string;
-  type: 'number' | 'string' | 'boolean';
+  type: "number" | "string" | "boolean";
 };
 
 export type NumberParameter = BaseParameter & {
-  type: 'number';
+  type: "number";
   initial: number;
   min?: number;
   max?: number;
@@ -20,25 +20,29 @@ export type NumberParameter = BaseParameter & {
 };
 
 export type StringParameter = BaseParameter & {
-  type: 'string';
+  type: "string";
   initial: string;
   options?: ParameterOption[];
 };
 
 export type BooleanParameter = BaseParameter & {
-  type: 'boolean';
+  type: "boolean";
   initial: boolean;
 };
 
 export type VectorParameter = BaseParameter & {
-  type: 'number';
+  type: "number";
   initial: number[];
   min: number;
   max: number;
   step: number;
 };
 
-export type Parameter = NumberParameter | StringParameter | BooleanParameter | VectorParameter;
+export type Parameter =
+  | NumberParameter
+  | StringParameter
+  | BooleanParameter
+  | VectorParameter;
 
 export type ParameterSet = {
   parameters: Parameter[];
