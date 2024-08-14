@@ -97,7 +97,7 @@ export default function SettingsMenu({
         ref={settingsMenu}
       />
 
-      <Button
+      {/* <Button
         title="Settings menu"
         style={style}
         className={className}
@@ -105,7 +105,7 @@ export default function SettingsMenu({
         text
         icon="pi pi-cog"
         onClick={(e) => settingsMenu.current && settingsMenu.current.toggle(e)}
-      />
+      /> */}
     </>
   );
 }
