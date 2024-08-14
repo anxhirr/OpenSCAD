@@ -19,13 +19,13 @@ export default function PanelSwitcher() {
     label: string;
   }[] = [
     { id: "editor", icon: "pi pi-pencil", label: "Edit" },
-    { id: "viewer", icon: "pi pi-box", label: "View" },
+    { id: "customizer", icon: "pi pi-sliders-h", label: "Customize" },
   ];
   if ((state.parameterSet?.parameters?.length ?? 0) > 0) {
     singleTargets.push({
-      id: "customizer",
-      icon: "pi pi-sliders-h",
-      label: "Customize",
+      id: "viewer",
+      icon: "pi pi-box",
+      label: "View",
     });
   }
   const multiTargets = singleTargets;
