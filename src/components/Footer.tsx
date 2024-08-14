@@ -106,12 +106,13 @@ export default function Footer({ style }: { style?: CSSProperties }) {
       <div
         className="flex flex-row gap-1"
         style={{
-          // display: 'flex',
-          // flexDirection: 'row',
-          // gap: '10px',
-          // verticalAlign: 'center',
+          position: "fixed", // Fix the container's position
+          bottom: "10px", // Distance from the bottom of the screen
+          left: "50%", // Center horizontally
+          transform: "translateX(-50%)", // Center horizontally
           alignItems: "center",
           margin: "5px",
+          zIndex: 1000, // Ensure it's on top of other elements
           ...(style ?? {}),
         }}>
         <Button
@@ -137,19 +138,6 @@ export default function Footer({ style }: { style?: CSSProperties }) {
             onClick={() => downloadOutput(state)}
           />
         )}
-
-        {/* {state.output &&
-        <span style={{color: 'blue'}}>
-          <i className="pi pi-stopwatch" title={state.error}></i>
-          <span style={{margin: '5px'}}>{state.output.formattedElapsedMillis}</span>
-        </span>} */}
-
-        {/* {state.previewing && 'previewing... '}
-      {state.rendering && 'rendering... '}
-      {state.checkingSyntax && 'checking syntax... '} */}
-
-        {/* <span style={{flex: 1}}></span> */}
-
         <span style={{ flex: 1 }}></span>
 
         <Toast ref={toast} />
