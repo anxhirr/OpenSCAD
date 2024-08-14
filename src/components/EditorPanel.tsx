@@ -216,6 +216,8 @@ export default function EditorPanel({
         style={{
           position: "relative",
           flex: 1,
+          backgroundColor: "#1e1e1e", // Ensure the background is dark even outside the editor
+          color: "#d4d4d4", // Light text color to match the dark theme
         }}>
         {isMonacoSupported && (
           <Editor
@@ -224,18 +226,21 @@ export default function EditorPanel({
             path={state.params.sourcePath}
             value={state.params.source}
             onChange={(s) => (model.source = s ?? "")}
-            onMount={onMount} // TODO: This looks a bit silly, does it trigger a re-render??
+            onMount={onMount}
             options={{
               ...openscadEditorOptions,
               fontSize: 16,
               lineNumbers: state.view.lineNumbers ? "on" : "off",
-              // readOnly: !isFileWritable(state.params.sourcePath)
+              theme: "vs-dark", // VS Code dark theme
             }}
           />
         )}
         {!isMonacoSupported && (
           <InputTextarea
-            style={{}}
+            style={{
+              backgroundColor: "#1e1e1e", // Dark background for fallback textarea
+              color: "#d4d4d4", // Light text color
+            }}
             className="openscad-editor absolute-fill"
             value={state.params.source}
             onChange={(s) => (model.source = s.target.value ?? "")}
