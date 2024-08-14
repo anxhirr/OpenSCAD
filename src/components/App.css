@@ -1,0 +1,27 @@
+/* App.css */
+
+.panel-single {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 400px;
+  height: 100vh;
+  overflow: auto;
+  z-index: 10;
+}
+
+div#pr_id_4_content {
+  color: #fff !important;
+}
+
+body {
+  overflow-y: hidden;
+  scrollbar-width: none;
+}
+:-webkit-scrollbar {
+  display: none;
+}
+.p-fieldset.p-fieldset-toggleable .p-fieldset-legend a {
+  background: #000 !important;
+  color: #ffffff !important;
+}
