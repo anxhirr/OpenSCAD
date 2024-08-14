@@ -67,7 +67,7 @@ export default function CustomizerPanel({
           style={{
             margin: "5px 10px 5px 10px",
             // backgroundColor: 'transparent',
-            backgroundColor: "rgba(255,255,255,0.4)",
+            backgroundColor: "rgba( rgb(0 0 0 / 0.4)",
           }}
           onCollapse={() => setTabOpen(group, false)}
           onExpand={() => setTabOpen(group, true)}
