@@ -14,6 +14,7 @@ import { ModelContext, FSContext } from "./contexts";
 import PanelSwitcher from "./PanelSwitcher";
 import { ConfirmDialog } from "primereact/confirmdialog";
 import CustomizerPanel from "./CustomizerPanel";
+import "./App.css";
 
 // import "primereact/resources/themes/lara-light-indigo/theme.css";
 // import "primereact/resources/primereact.min.css";
@@ -112,30 +113,28 @@ export function App({
             }>
             <EditorPanel
               className={`
-              opacity-animated
-              ${
-                layout.mode === "single" && layout.focus !== "editor"
-                  ? "opacity-0"
-                  : ""
-              }
-              ${layout.mode === "single" ? "absolute-fill" : ""}
-            `}
+      opacity-animated
+      ${
+        layout.mode === "single" && layout.focus !== "editor" ? "opacity-0" : ""
+      }
+      ${layout.mode === "single" ? "panel-single" : ""}
+    `}
               style={getPanelStyle("editor")}
             />
             <ViewerPanel
-              className={layout.mode === "single" ? `absolute-fill` : ""}
+              className={layout.mode === "single" ? "panel-single" : ""}
               style={getPanelStyle("viewer")}
             />
             <CustomizerPanel
               className={`
-              opacity-animated
-              ${
-                layout.mode === "single" && layout.focus !== "customizer"
-                  ? "opacity-0"
-                  : ""
-              }
-              ${layout.mode === "single" ? `absolute-fill` : ""}
-            `}
+      opacity-animated
+      ${
+        layout.mode === "single" && layout.focus !== "customizer"
+          ? "opacity-0"
+          : ""
+      }
+      ${layout.mode === "single" ? "panel-single" : ""}
+    `}
               style={getPanelStyle("customizer")}
             />
           </div>
