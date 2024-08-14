@@ -32,6 +32,14 @@ export class Model {
       !this.state.rendering &&
       this.state.params.source.trim() != ""
     ) {
+      // Set to single mode with Customize active
+      this.mutate((s) => {
+        s.view.layout = {
+          mode: "single",
+          focus: "customizer" as SingleLayoutComponentId,
+        };
+      });
+
       this.processSource();
     }
   }
@@ -82,25 +90,27 @@ export class Model {
 
   changeLayout(mode: "multi" | "single") {
     if (this.state.view.layout.mode === mode) return;
+
     this.mutate((s) => {
-      s.view.layout =
-        s.view.layout.mode === "multi"
-          ? {
-              mode: "single",
-              focus: s.view.layout.editor
-                ? "editor"
-                : s.view.layout.viewer
-                ? "viewer"
-                : "customizer",
-            }
-          : {
-              mode: "multi",
-              editor: s.view.layout.focus === "editor",
-              viewer: s.view.layout.focus === "viewer",
-              customizer: s.view.layout.focus === "customizer",
-            };
+      if (s.view.layout.mode === "multi") {
+        // Transitioning from multi to single mode
+        s.view.layout = {
+          mode: "single",
+          focus: "customizer", // Set the default or desired focus for single mode
+        };
+      } else {
+        // Transitioning from single to multi mode
+        const currentFocus = s.view.layout.focus as SingleLayoutComponentId;
+        s.view.layout = {
+          mode: "multi",
+          editor: currentFocus === "editor",
+          viewer: currentFocus === "viewer",
+          customizer: currentFocus === "customizer",
+        };
+      }
     });
   }
+
   changeSingleVisibility(focus: SingleLayoutComponentId) {
     this.mutate((s) => {
       if (s.view.layout.mode !== "single") throw new Error("Wrong mode");
