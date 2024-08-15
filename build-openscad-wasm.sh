@@ -12,7 +12,7 @@ if [ -z "${OPENSCAD_DIR:-}" ]; then
 fi
 
 docker run --rm -it -v "$OPENSCAD_DIR":/src:rw --platform=linux/amd64 openscad/wasm-base:latest \
-  emcmake cmake -B build -DEXPERIMENTAL=ON "$@" && \
+  emcmake cmake -B build -DEXPERIMENTAL=ON "$@"
 docker run --rm -it -v "$OPENSCAD_DIR":/src:rw --platform=linux/amd64 openscad/wasm-base:latest \
   cmake --build build -j10
 
