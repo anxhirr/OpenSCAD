@@ -1,8 +1,6 @@
 const CopyPlugin = require("copy-webpack-plugin");
 
 const path = require("path");
-const webpack = require("webpack"); // Ensure webpack is required
-
 module.exports = {
   entry: "./src/index.tsx",
   // devtool: 'inline-source-map',
@@ -40,7 +38,6 @@ module.exports = {
     static: path.join(__dirname, "dist"),
     compress: true,
     port: 4000,
-    hot: true, // Enable HMR
   },
   plugins: [
     new CopyPlugin({
@@ -60,6 +57,5 @@ module.exports = {
         },
       ],
     }),
-    new webpack.HotModuleReplacementPlugin(), // Ensure this is included
   ],
 };
