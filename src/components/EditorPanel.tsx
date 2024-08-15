@@ -1,5 +1,3 @@
-// Portions of this file are Copyright 2021 Google LLC, and licensed under GPL2+. See COPYING.
-
 import React, { CSSProperties, useContext, useRef, useState } from "react";
 import Editor, { loader, Monaco } from "@monaco-editor/react";
 import openscadEditorOptions from "../language/openscad-editor-options";

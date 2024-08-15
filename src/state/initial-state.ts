@@ -1,5 +1,3 @@
-// Portions of this file are Copyright 2021 Google LLC, and licensed under GPL2+. See COPYING.
-
 import defaultScad from "./default-scad";
 import { State } from "./app-state";
 

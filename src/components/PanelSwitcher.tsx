@@ -1,5 +1,3 @@
-// Portions of this file are Copyright 2021 Google LLC, and licensed under GPL2+. See COPYING.
-
 import React, { useContext } from "react";
 import { SingleLayoutComponentId } from "../state/app-state";
 import { TabMenu } from "primereact/tabmenu";

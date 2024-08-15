@@ -1,5 +1,3 @@
-// Portions of this file are Copyright 2021 Google LLC, and licensed under GPL2+. See COPYING.
-
 import loader from "@monaco-editor/loader";
 import { ZipArchives } from "../fs/zip-archives";
 import { buildOpenSCADCompletionItemProvider } from "./openscad-completions";

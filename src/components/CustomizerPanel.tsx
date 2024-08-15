@@ -1,5 +1,3 @@
-// Portions of this file are Copyright 2021 Google LLC, and licensed under GPL2+. See COPYING.
-
 import { CSSProperties, useContext } from "react";
 import { ModelContext, FSContext } from "./contexts";
 
