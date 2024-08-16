@@ -117,7 +117,7 @@ export default function Footer({ style }: { style?: CSSProperties }) {
           onClick={() => model.render({ isPreview: false, now: true })}
           loading={state.rendering}
           icon="pi pi-refresh"
-          title="Render the model (F6 / Ctrl+Enter). Models can test $preview to enable more detail in renders only."
+          title="Render the model (F6)."
           label="Render"
         />
 
