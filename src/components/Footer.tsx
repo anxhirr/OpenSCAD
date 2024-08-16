@@ -98,7 +98,7 @@ export default function Footer({ style }: { style?: CSSProperties }) {
             state.rendering || state.previewing || state.checkingSyntax
               ? "visible"
               : "hidden",
-          height: "6px",
+          height: "2px",
         }}></ProgressBar>
 
       <div
