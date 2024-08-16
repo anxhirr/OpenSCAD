@@ -29,64 +29,62 @@ export default function PanelSwitcher() {
   const multiTargets = singleTargets;
 
   return (
-    <div className="">
-      <div
-        className="flex flex-row"
-        style={{
-          margin: "5px",
-          position: "relative",
-        }}>
-        {state.view.layout.mode === "multi" ? (
-          <div
-            className="flex flex-row gap-1"
-            style={{
-              justifyContent: "center",
-              flex: 1,
-              margin: "5px",
-            }}>
-            {multiTargets.map(({ icon, label, id }) => (
-              // <Button
-              <ToggleButton
-                key={id}
-                // raised={(state.view.layout as any)[id]}
-                checked={(state.view.layout as any)[id]}
-                // label={label}
-                onLabel={label}
-                offLabel={label}
-                onIcon={icon}
-                offIcon={icon}
-                // icon={icon}
-                // onClick={() => model.changeMultiVisibility(id, !(state.view.layout as any)[id])}
-                onChange={(e) => model.changeMultiVisibility(id, e.value)}
-              />
-            ))}
-          </div>
-        ) : (
-          <>
-            <TabMenu
-              activeIndex={singleTargets
-                .map((t) => t.id)
-                .indexOf(state.view.layout.focus)}
-              style={{
-                flex: 1,
-                // justifyContent: 'center'
-              }}
-              model={singleTargets.map(({ icon, label, id }) => ({
-                icon,
-                label /*, disabled: id === 'customizer' && state?.parameterSet == null*/,
-                command: () => model.changeSingleVisibility(id),
-              }))}
-            />
-          </>
-        )}
-        <SettingsMenu
+    <div
+      className="flex flex-row"
+      style={{
+        margin: "0px",
+        position: "relative",
+      }}>
+      {state.view.layout.mode === "multi" ? (
+        <div
+          className="flex flex-row gap-1"
           style={{
-            position: "absolute",
-            right: 0,
-            top: "4px",
-          }}
-        />
-      </div>
+            justifyContent: "center",
+            flex: 1,
+            margin: "5px",
+          }}>
+          {multiTargets.map(({ icon, label, id }) => (
+            // <Button
+            <ToggleButton
+              key={id}
+              // raised={(state.view.layout as any)[id]}
+              checked={(state.view.layout as any)[id]}
+              // label={label}
+              onLabel={label}
+              offLabel={label}
+              onIcon={icon}
+              offIcon={icon}
+              // icon={icon}
+              // onClick={() => model.changeMultiVisibility(id, !(state.view.layout as any)[id])}
+              onChange={(e) => model.changeMultiVisibility(id, e.value)}
+            />
+          ))}
+        </div>
+      ) : (
+        <>
+          <TabMenu
+            activeIndex={singleTargets
+              .map((t) => t.id)
+              .indexOf(state.view.layout.focus)}
+            style={{
+              flex: 1,
+              // justifyContent: 'center'
+            }}
+            model={singleTargets.map(({ icon, label, id }) => ({
+              icon,
+              label /*, disabled: id === 'customizer' && state?.parameterSet == null*/,
+              command: () => model.changeSingleVisibility(id),
+            }))}
+          />
+        </>
+      )}
+      <SettingsMenu
+        style={{
+          position: "absolute",
+          right: 0,
+          top: "4px",
+        }}
+      />
     </div>
   );
 }
