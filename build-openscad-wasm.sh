@@ -35,6 +35,6 @@ else
 fi
 
 # Install Node.js dependencies, build, and start the project
-yarn install
+npm install
 make public
 npm start
