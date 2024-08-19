@@ -6,3 +6,5 @@ package-lock.json
 .DS_Store
 public/libraries/*
 !public/libraries/.gitkeep
+public/openscad.js
+public/openscad.wasm
