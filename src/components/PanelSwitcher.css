@@ -1,0 +1,19 @@
+/* PanelSwitcher.css */
+.toggle-button .p-button-label {
+  display: inline;
+}
+
+.tab-menu-item .p-menuitem-text {
+  display: inline;
+}
+
+/* Media query for screens with max width 600px */
+@media (max-width: 600px) {
+  .toggle-button .p-button-label {
+    display: none;
+  }
+
+  .tab-menu-item .p-menuitem-text {
+    display: none;
+  }
+}
