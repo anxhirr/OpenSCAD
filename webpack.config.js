@@ -34,7 +34,14 @@ module.exports = {
     compress: true,
     port: 4000,
     host: "0.0.0.0",
+    allowedHosts: "all",
+    headers: {
+      "Access-Control-Allow-Origin": "*", // Allow all origins
+      "Access-Control-Allow-Headers": "X-Requested-With, content-type",
+      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+    },
   },
+
   plugins: [
     new CopyPlugin({
       patterns: [
