@@ -4,16 +4,14 @@ set -euo pipefail
 # Define the default directory if not set
 OPENSCAD_DIR="${OPENSCAD_DIR:-$HOME/tmp/openscad-color}"
 
-# Clone or update the OpenSCAD repository
-if [ ! -d "$OPENSCAD_DIR" ] || [ ! -d "$OPENSCAD_DIR/.git" ]; then
+# Clone the OpenSCAD repository
+if [ ! -d "$OPENSCAD_DIR" ]; then
   echo "Cloning the OpenSCAD repository..."
   git clone --recurse https://github.com/inerttila/3DSkai-OpenSCAD.git \
     "$OPENSCAD_DIR"
 else
-  echo "Directory $OPENSCAD_DIR already exists. Updating repository..."
-  cd "$OPENSCAD_DIR"
+  echo "Directory $OPENSCAD_DIR already exists."
 fi
-
 
 # Run CMake and build with Docker
 docker run --rm -it -v "$OPENSCAD_DIR":/src:rw --platform=linux/amd64 openscad/wasm-base:latest \
