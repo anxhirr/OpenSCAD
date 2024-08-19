@@ -39,7 +39,7 @@ export function createInitialState(fs: any, state: State | null) {
         customizer: false,
       } as any,
 
-      color: "#0000", // Set color to always be #0000
+      color: "#fff", // Set color to always be #000
     },
     ...(state ?? {}),
   };
