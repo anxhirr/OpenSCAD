@@ -3,13 +3,12 @@ import { State } from "../state/app-state";
 import { ModelContext } from "./contexts";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import { Button } from "primereact/button";
-import { ProgressBar } from "primereact/progressbar";
 import { Badge } from "primereact/badge";
 import { Menu } from "primereact/menu";
 import { Toast } from "primereact/toast";
-import SettingsMenu from "./SettingsMenu";
 import HelpMenu from "./HelpMenu";
 import { confirmDialog } from "primereact/confirmdialog";
+import "./footer.css";
 
 function downloadOutput(state: State) {
   if (!state.output) return;
@@ -89,28 +88,31 @@ export default function Footer({ style }: { style?: CSSProperties }) {
 
   return (
     <>
-      <ProgressBar
-        mode="indeterminate"
+      <div
+        className="inert"
         style={{
-          marginLeft: "5px",
-          marginRight: "5px",
-          visibility:
+          display:
             state.rendering || state.previewing || state.checkingSyntax
-              ? "visible"
-              : "hidden",
-          height: "2px",
-        }}></ProgressBar>
+              ? "flex"
+              : "none",
+        }}>
+        <div className="spinner-square">
+          <div className="square-1 square"></div>
+          <div className="square-2 square"></div>
+          <div className="square-3 square"></div>
+        </div>
+      </div>
 
       <div
         className="flex flex-row gap-1"
         style={{
-          position: "fixed", // Fix the container's position
-          bottom: "10px", // Distance from the bottom of the screen
-          left: "50%", // Center horizontally
-          transform: "translateX(-50%)", // Center horizontally
+          position: "fixed",
+          bottom: "10px",
+          left: "50%",
+          transform: "translateX(-50%)",
           alignItems: "center",
           margin: "5px",
-          zIndex: 1000, // Ensure it's on top of other elements
+          zIndex: 1000,
           ...(style ?? {}),
         }}>
         <Button
