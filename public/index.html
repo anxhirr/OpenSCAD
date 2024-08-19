@@ -6,7 +6,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>3DSKAI Playground</title>
   <meta name="description"
-    content="OpenSCAD Playground: edit .scad models and render them to STL from the browser (WebAssembly build OpenSCAD, with Monaco editor and STL Viewer)">
+    content="3DSKAI Playground: edit .scad models and render them to STL from the browser (WebAssembly build OpenSCAD, with Monaco editor and STL Viewer)">
 
   <link rel="icon" href="favicon.ico">
   <link rel="apple-touch-icon" href="logo192.png">
@@ -59,6 +59,121 @@
       display: none;
     }
 
+    /* start here the new style */
+
+    .p-checkbox .p-checkbox-box.p-highlight:not(.p-disabled):hover {
+      border-color: #fff !important;
+    }
+
+    .p-checkbox .p-checkbox-box {
+      background: #000 !important;
+    }
+
+    .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-focus {
+      box-shadow: none !important;
+    }
+
+    .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover {
+      background: #000 !important;
+    }
+
+    .p-checkbox .p-checkbox-box.p-highlight {
+      background: #000 !important;
+      border-color: #fff !important;
+    }
+
+    .p-fieldset {
+      color: #f9f6f6 !important;
+      font-size: 0.8rem !important;
+    }
+
+    .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link:not(.p-disabled):focus {
+      box-shadow: inset 0px 0px 0 0.1rem #fbfbfb !important;
+    }
+
+    .p-fieldset.p-fieldset-toggleable .p-fieldset-legend a:focus {
+      box-shadow: none !important;
+    }
+
+    button.p-button.p-component.p-button-icon-only.p-button-text.p-button-secondary {
+      box-shadow: none !important;
+    }
+
+    .p-inputtext {
+      font-size: 0.7rem !important;
+    }
+
+    .p-button {
+      color: #ffffff !important;
+      background: #000000 !important;
+      border: none !important;
+      transition: background-color 0.2s, color 0.2s, border-color 0.2s, box-shadow 0.2s !important;
+      border-radius: 0px !important;
+      box-shadow: none !important;
+    }
+
+    div#pr_id_4_content {
+      color: #fff !important;
+      font-size: 13px !important;
+    }
+
+    .p-button:enabled:hover,
+    .p-button:not(button):not(a):not(.p-disabled):hover {
+      background: #232229 !important;
+      color: #ffffff !important;
+      border-color: #0c0c0c !important;
+    }
+
+    .p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link {
+      border: none !important;
+      border-width: 0 !important;
+      border: none !important;
+      background: #000 !important;
+      color: #ffffff !important;
+      padding: 1.25rem !important;
+      font-weight: 700 !important;
+      border-top-right-radius: 0px !important;
+      border-top-left-radius: 0px !important;
+      transition: box-shadow 0.2s !important;
+      margin: 0 0 0px 0 !important;
+      height: calc(100% + 2px) !important;
+    }
+
+    p-tabmenu .p-tabmenu-nav .p-tabmenuitem .p-menuitem-link:not(.p-disabled):focus {
+      outline: none !important;
+      outline-offset: 0 !important;
+      box-shadow: inset 0 0 0 0.1rem #fff !important;
+    }
+
+    .p-tabmenu {
+      position: fixed !important;
+      right: 0 !important;
+      top: 50% !important;
+      transform: translateY(-50%) !important;
+      z-index: 1000 !important;
+
+      border-left: none !important;
+      border-top: none !important;
+      border-bottom: none !important;
+      border-right: none !important;
+    }
+
+    .p-tabmenu .p-tabmenu-nav {
+      display: flex !important;
+      flex-direction: column !important;
+      border: none !important;
+      width: 100% !important;
+    }
+
+    .p-tabmenu .p-tabmenu-nav li {
+      border-bottom: none !important;
+    }
+
+    .p-tabmenu .p-tabmenu-nav li:last-child {
+      border-bottom: none !important;
+    }
+
+    /* new style that i have add ends here  */
     .p-tabmenu-nav {
       justify-content: center;
     }
@@ -138,11 +253,6 @@
 </head>
 
 <body>
-  <!-- <audio id="complete-sound">
-    <source src="complete.wav" type="audio/wav">
-    Your browser does not support the audio element.
-  </audio> -->
-  <!-- <noscript>You need to enable JavaScript to run the OpenSCAD Playground.</noscript> -->
   <div id="root"></div>
 </body>
 
