@@ -1,0 +1,19 @@
+:root {
+  --dark-gradient: linear-gradient(45deg, #000000 0%, #1f222e 100%) !important;
+  --light-background: #fff !important;
+}
+
+body {
+  background: var(--dark-gradient);
+  transition: background 3s ease !important;
+}
+
+/* Style for dark mode */
+body:not(.light-mode)
+  button.p-button.p-component.p-button-icon-only.p-button-text.p-button-rounded {
+  background: none !important;
+}
+
+body.light-mode {
+  background: var(--light-background) !important;
+}
