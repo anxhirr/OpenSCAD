@@ -2,7 +2,7 @@ import defaultScad from "./default-scad";
 import { State } from "./app-state";
 
 export const defaultSourcePath = "/playground.scad";
-export const defaultModelColor = "#f9d72c";
+export const defaultModelColor = "#069";
 
 export const blankProjectState: State = {
   params: {
@@ -39,7 +39,7 @@ export function createInitialState(fs: any, state: State | null) {
         customizer: false,
       } as any,
 
-      color: "#fff", // Set color to always be #000
+      color: "#069", // Set color to always be #000
     },
     ...(state ?? {}),
   };
