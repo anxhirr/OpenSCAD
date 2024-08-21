@@ -1,10 +1,9 @@
-import { CSSProperties, useContext, useRef } from "react";
+import { CSSProperties, useContext, useRef, useState } from "react";
 import { Button } from "primereact/button";
 import { MenuItem } from "primereact/menuitem";
 import { Menu } from "primereact/menu";
 import { ModelContext } from "./contexts";
-import { isInStandaloneMode } from "../utils";
-import { confirmDialog } from "primereact/confirmdialog";
+import "./menu.css";
 
 export default function SettingsMenu({
   className,
@@ -18,92 +17,51 @@ export default function SettingsMenu({
   const state = model.state;
 
   const settingsMenu = useRef<Menu>(null);
+  const [isDarkMode, setIsDarkMode] = useState(true);
+
+  // Toggle between dark and white modes
+  const toggleMode = () => {
+    const newMode = !isDarkMode;
+    setIsDarkMode(newMode);
+
+    // Apply the class based on the new mode
+    if (newMode) {
+      document.body.classList.remove("light-mode");
+    } else {
+      document.body.classList.add("light-mode");
+    }
+  };
+
   return (
     <>
       <Menu
         model={
           [
             {
-              label:
-                state.view.layout.mode === "multi"
-                  ? "Switch to single panel mode"
-                  : "Switch to side-by-side mode",
-              icon: "pi pi-table",
-              // disabled: true,
-              command: () =>
-                model.changeLayout(
-                  state.view.layout.mode === "multi" ? "single" : "multi"
-                ),
+              label: isDarkMode
+                ? "Switch to White Mode"
+                : "Switch to Dark Mode",
+              command: () => toggleMode(),
             },
-            {
-              separator: true,
-            },
-            {
-              label: state.view.showAxes ? "Hide axes" : "Show axes",
-              icon: "pi pi-box",
-              // disabled: true,
-              command: () =>
-                model.mutate((s) => (s.view.showAxes = !s.view.showAxes)),
-            },
-            {
-              label: state.view.showShadows ? "Hide shadows" : "Add shadows",
-              icon: "pi pi-box",
-              // disabled: true,
-              command: () =>
-                model.mutate((s) => (s.view.showShadows = !s.view.showShadows)),
-            },
-            {
-              label: state.view.lineNumbers
-                ? "Hide line numbers"
-                : "Show line numbers",
-              icon: "pi pi-list",
-              // disabled: true,
-              command: () =>
-                model.mutate((s) => (s.view.lineNumbers = !s.view.lineNumbers)),
-            },
-            ...(isInStandaloneMode
-              ? [
-                  {
-                    separator: true,
-                  },
-                  {
-                    label: "Clear local storage",
-                    icon: "pi pi-list",
-                    // disabled: true,
-                    command: () => {
-                      confirmDialog({
-                        message:
-                          "This will clear all the edits you've made and files you've created in this playground " +
-                          "and will reset it to factory defaults. " +
-                          "Are you sure you wish to proceed? (you might lose your models!)",
-                        header: "Clear local storage",
-                        icon: "pi pi-exclamation-triangle",
-                        accept: () => {
-                          localStorage.clear();
-                          location.reload();
-                        },
-                        acceptLabel: `Clear all files!`,
-                        rejectLabel: "Cancel",
-                      });
-                    },
-                  },
-                ]
-              : []),
           ] as MenuItem[]
         }
         popup
         ref={settingsMenu}
       />
 
-      {/* <Button
-        title="Settings menu"
-        style={style}
-        className={className}
-        rounded
-        text
-        icon="pi pi-cog"
-        onClick={(e) => settingsMenu.current && settingsMenu.current.toggle(e)}
-      /> */}
+      {
+        <Button
+          title="Settings menu"
+          style={{ ...style, zIndex: "11", top: "0px" }}
+          className={className}
+          rounded
+          text
+          icon="pi pi-cog"
+          onClick={(e) =>
+            settingsMenu.current && settingsMenu.current.toggle(e)
+          }
+        />
+      }
     </>
   );
 }
