@@ -59,8 +59,20 @@
     }
 
     /* start here the new style */
-    button.p-button.p-component.p-button-icon-only.p-button-text.p-button-rounded {
-      background: #000000ad !important;
+    .p-fieldset .p-fieldset-legend {
+      border-radius: 0px !important;
+    }
+
+    .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box:hover {
+      border-color: #fff !important;
+    }
+
+    .p-inputtext:enabled:focus {
+      box-shadow: none !important;
+    }
+
+    .p-inputtext:enabled:hover {
+      border-color: #fff !important;
     }
 
     .p-checkbox .p-checkbox-box.p-highlight:not(.p-disabled):hover {
@@ -68,11 +80,12 @@
     }
 
     .p-checkbox .p-checkbox-box {
-      background: #000 !important;
+      background: none !important;
     }
 
     .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-focus {
       box-shadow: none !important;
+      border-color: #fff !important;
     }
 
     .p-checkbox:not(.p-checkbox-disabled) .p-checkbox-box.p-highlight:hover {
@@ -80,7 +93,7 @@
     }
 
     .p-checkbox .p-checkbox-box.p-highlight {
-      background: #000 !important;
+      background: none !important;
       border-color: #fff !important;
     }
 
@@ -93,16 +106,16 @@
       box-shadow: inset 0px 0px 0 0.1rem #fbfbfb !important;
     }
 
-    .p-fieldset.p-fieldset-toggleable .p-fieldset-legend a:focus {
-      box-shadow: none !important;
-    }
-
     button.p-button.p-component.p-button-icon-only.p-button-text.p-button-secondary {
       box-shadow: none !important;
     }
 
     .p-inputtext {
       font-size: 0.7rem !important;
+      color: #fff !important;
+      background: #00000000 !important;
+      border-radius: 0px !important;
+      border-color: #fff !important;
     }
 
     .p-button {
@@ -187,6 +200,7 @@
 
     .p-fieldset {
       background: #000000ad !important;
+      border-radius: 0px !important;
     }
 
     .p-fieldset-legend {
