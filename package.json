@@ -24,9 +24,9 @@
     "primereact": "9.3.x",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "three": "^0.140.0",
     "react-stl-viewer": "^2.2.5",
     "react-widgets": "^5.8.4",
+    "three": "^0.140.0",
     "uzip": "^0.20201231.0"
   },
   "scripts": {
