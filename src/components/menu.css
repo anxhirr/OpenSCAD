@@ -17,3 +17,7 @@ body:not(.light-mode)
 body.light-mode {
   background: var(--light-background) !important;
 }
+body.light-mode
+  .p-button.p-component.p-button-icon-only.p-button-text.p-button-rounded {
+  background: #000000a3 !important;
+}
