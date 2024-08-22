@@ -40,14 +40,14 @@ Local dev:
 
 ```bash
 make public
-npm start
+yarn  start
 ```
 
 Local prod (test both the different inlining and serving under a prefix):
 
 ```bash
 make public
-npm run start:prod
+yarn run start:prod
 ```
 
 Deployment (edit "homepage" in `package.json` to match your deployment root!):
