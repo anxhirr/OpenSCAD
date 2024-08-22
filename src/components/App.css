@@ -22,6 +22,7 @@ body {
   display: none;
 }
 .p-fieldset.p-fieldset-toggleable .p-fieldset-legend a {
-  background: #000 !important;
+  background: none !important;
   color: #ffffff !important;
+  box-shadow: none !important;
 }
