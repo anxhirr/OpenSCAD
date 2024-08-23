@@ -20,6 +20,7 @@
     "three": "^0.140.0"
   },
   "scripts": {
+    "start:dev": "npx webpack serve --config webpack.config.js --env development",
     "start": "concurrently 'npx webpack serve --mode=development' 'NODE_ENV=development npx rollup --config openscad-worker.rollup.config.js --watch'",
     "start:prod": "PUBLIC_URL=http://localhost:3000/dist/ npm run build && npx serve",
     "build": "NODE_ENV=production npx rollup --config openscad-worker.rollup.config.js && webpack --mode=production"
