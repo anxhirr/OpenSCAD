@@ -38,6 +38,8 @@ Prerequisites:
 
 Local dev:
 
+On LINUX
+
 ```bash
 yarn install
 make public
