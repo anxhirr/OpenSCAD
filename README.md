@@ -43,13 +43,7 @@ On LINUX
 ```bash
 yarn install
 make public
-yarn  start
-```
-
-Local prod (test both the different inlining and serving under a prefix):
-
-```bash
-yarn run start:prod
+yarn start:dev
 ```
 
 First Start :
@@ -69,16 +63,16 @@ sudo apt install unzip
 
 cd 3DSkai-OpenSCAD
 
-npm install
+yarn install
 
 make public
 
-npm start
+yarn start:dev
 
 ```
 
 rebuild
 
 ```bash
-npm run build
+yarn run build
 ```
