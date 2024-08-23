@@ -39,6 +39,7 @@ Prerequisites:
 Local dev:
 
 ```bash
+yarn install
 make public
 yarn  start
 ```
@@ -46,14 +47,7 @@ yarn  start
 Local prod (test both the different inlining and serving under a prefix):
 
 ```bash
-make public
 yarn run start:prod
-```
-
-Deployment (edit "homepage" in `package.json` to match your deployment root!):
-
-```bash
-rm -fR ../ochafik.github.io/openscad2 && cp -R dist ../ochafik.github.io/openscad2
 ```
 
 First Start :
@@ -84,18 +78,5 @@ npm start
 rebuild
 
 ```bash
-
-make public
 npm run build
 ```
-
-if you got an error like somithing with the zip
-try this
-
-# Ensure output directory exists
-
-mkdir -p public/libraries
-
-# Create ZIP file
-
-zip -r public/libraries/fonts.zip -j fonts.conf libs/noto/_.ttf libs/liberation/{_.ttf,LICENSE,AUTHORS}
