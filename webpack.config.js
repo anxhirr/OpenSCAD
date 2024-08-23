@@ -1,7 +1,8 @@
 const CopyPlugin = require("copy-webpack-plugin");
-
 const path = require("path");
+
 module.exports = {
+  mode: "development",
   entry: "./src/index.tsx",
   module: {
     rules: [
@@ -30,7 +31,10 @@ module.exports = {
     path: path.resolve(__dirname, "dist"),
   },
   devServer: {
-    static: path.join(__dirname, "dist"),
+    static: {
+      directory: path.join(__dirname, "dist"),
+      publicPath: "/",
+    },
     compress: true,
     port: 4000,
     host: "0.0.0.0",
@@ -40,8 +44,13 @@ module.exports = {
       "Access-Control-Allow-Headers": "X-Requested-With, content-type",
       "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
     },
+    setupMiddlewares: (middlewares, devServer) => {
+      devServer.app.get("/", (req, res) => {
+        res.sendFile(path.resolve(__dirname, "public/start.html"));
+      });
+      return middlewares;
+    },
   },
-
   plugins: [
     new CopyPlugin({
       patterns: [
@@ -55,11 +64,11 @@ module.exports = {
         },
         {
           from: path.resolve(__dirname, "src/wasm/openscad.js"),
-          to: path.resolve(__dirname, "dist/openscad.js"), // Add `to` property to specify the destination
+          to: path.resolve(__dirname, "dist/openscad.js"),
         },
         {
           from: path.resolve(__dirname, "src/wasm/openscad.wasm"),
-          to: path.resolve(__dirname, "dist/openscad.wasm"), // Add `to` property to specify the destination
+          to: path.resolve(__dirname, "dist/openscad.wasm"),
         },
       ],
     }),
