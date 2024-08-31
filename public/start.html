@@ -10,7 +10,6 @@
 <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <link rel="stylesheet" href="front.css">
-
 </head>
 
 
@@ -1009,8 +1008,8 @@
                         </svg>
                     </a>
                 </div>
-                <p class="mt-10 text-center text-xs leading-5 text-gray-500">&copy; 2024 Naida, Inc. All rights
-                    reserved.</p>
+                <p class="mt-10 text-center text-xs leading-5 text-gray-500">&copy; <span id="year"></span> 3DSKAI, Inc.
+                    All rights reserved.</p>
             </div>
         </footer>
 
@@ -1060,5 +1059,10 @@
     </div>
 
 </body>
+<script>
+    // Update the content of the <span> with the current year
+    const currentYear = new Date().getFullYear();
+    document.getElementById('year').textContent = currentYear;
+</script>
 
 </html>
