@@ -30,11 +30,15 @@ export class Model {
       !this.state.rendering &&
       this.state.params.source.trim() != ""
     ) {
-      // Set to single mode with Customize active
+      // Determine the mode and focus based on screen width
+      const isSmallScreen = window.matchMedia("(max-width: 600px)").matches;
+
       this.mutate((s) => {
         s.view.layout = {
           mode: "single",
-          focus: "customizer" as SingleLayoutComponentId,
+          focus: isSmallScreen
+            ? "viewer" // Set focus to "viewer" on small screens (<= 600px)
+            : ("customizer" as SingleLayoutComponentId), // Otherwise, keep it "customizer"
         };
       });
 
