@@ -104,7 +104,7 @@
                             <a href="https://3dskai.com/en/contact-us/"
                                 class="relative group hidden min-[845px]:flex bg-transparent min-w-44 w-44 h-12 rounded-lg overflow-hidden border border-[#E730CA] font-semibold text-[#E730CA] sm:hover:text-white sm:hover:border-[#561950] transition-all duration-700"
                                 style="will-change: transform" id="cta">
-                                <span x-on:mouseover="openError = true"
+                                <span x-on:mouseover="openError = flase"
                                     class="flex justify-center items-center h-full w-full sm:transform sm:group-hover:-translate-x-3.5 transition-transform cursor-pointer duration-700">Contact
                                     Us</span>
                                 <span
@@ -358,6 +358,7 @@
                                     <circle cx="290" cy="290" r="231.5" stroke="currentColor" stroke-opacity="0.2" />
                                 </svg>
 
+                                <!-- those are 3 models that are in the very fist of the page  -->
                                 <div class="circle w-full h-full max-w-md max-h-md lg:max-w-full lg:min-w-[445px] lg:max-h-full lg:min-h-[445px]"
                                     style="--total: 12">
                                     <div class="stat" style="--i:3">
@@ -479,7 +480,7 @@
                                         </div>
                                     </div>
                                 </div>
-
+                                <!-- those are 3 models that are in the very fist of the page  -->
                             </div>
                         </div>
                     </div>
@@ -1031,8 +1032,7 @@
             </div>
         </footer>
 
-        <!-- Uncoment this when you have finished with the editon , this will thell when a button is not conect , is good web -->
-        <!-- 
+        <!-- this code will show a msg when the when a button on the  page do not have an href  -->
         <div aria-live="assertive" x-cloak x-show="openError"
             class="pointer-events-none fixed bottom-0 right-0 border-red-500 flex items-end px-4 py-6 sm:p-6 max-w-[418px] w-full"
             style="z-index: 1000;">
@@ -1072,8 +1072,8 @@
                         </div>
                     </div>
                 </div>
-            </div> -->
-    </div>
+            </div>
+        </div>
     </div>
 
 </body>
