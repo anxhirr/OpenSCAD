@@ -22,7 +22,7 @@ body {
 }
 
 .btn--animateglowPink {
-  --border-size: 6px;
+  --border-size: 4px;
   --border-angle: 0turn;
   background-image: conic-gradient(
       from var(--border-angle),
