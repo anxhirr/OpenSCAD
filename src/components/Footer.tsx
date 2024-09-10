@@ -87,7 +87,7 @@ export default function Footer({ style }: { style?: CSSProperties }) {
       : markers.map((m) => m.severity).reduce((a, b) => Math.max(a, b));
 
   return (
-    <>
+    <div>
       <div
         className="inert"
         style={{
@@ -144,6 +144,6 @@ export default function Footer({ style }: { style?: CSSProperties }) {
 
         <HelpMenu />
       </div>
-    </>
+    </div>
   );
 }
