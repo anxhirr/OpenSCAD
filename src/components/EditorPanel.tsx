@@ -3,13 +3,8 @@ import Editor, { loader, Monaco } from "@monaco-editor/react";
 import openscadEditorOptions from "../language/openscad-editor-options";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
 import { InputTextarea } from "primereact/inputtextarea";
-import { Button } from "primereact/button";
-import { MenuItem } from "primereact/menuitem";
 import { Menu } from "primereact/menu";
-import { buildUrlForStateParams } from "../state/fragment-state";
-import { blankProjectState, defaultSourcePath } from "../state/initial-state";
 import { ModelContext, FSContext } from "./contexts";
-import FilePicker from "./FilePicker";
 
 // const isMonacoSupported = false;
 const isMonacoSupported = (() => {
@@ -73,19 +68,16 @@ export default function EditorPanel({
     <div
       className={`editor-panel ${className ?? ""}`}
       style={{
-        // maxWidth: '5 0vw',
         display: "flex",
         flexDirection: "column",
-        // position: 'relative',
-        // width: '100%', height: '100%',
         ...(style ?? {}),
       }}>
       <div
         style={{
           position: "relative",
           flex: 1,
-          backgroundColor: "#1e1e1e", // Ensure the background is dark even outside the editor
-          color: "#d4d4d4", // Light text color to match the dark theme
+          backgroundColor: "#1e1e1e",
+          color: "#d4d4d4",
         }}>
         {isMonacoSupported && (
           <Editor
@@ -99,15 +91,15 @@ export default function EditorPanel({
               ...openscadEditorOptions,
               fontSize: 16,
               lineNumbers: state.view.lineNumbers ? "on" : "off",
-              theme: "vs-dark", // VS Code dark theme
+              theme: "vs-dark",
             }}
           />
         )}
         {!isMonacoSupported && (
           <InputTextarea
             style={{
-              backgroundColor: "#1e1e1e", // Dark background for fallback textarea
-              color: "#d4d4d4", // Light text color
+              backgroundColor: "#1e1e1e",
+              color: "#d4d4d4",
             }}
             className="openscad-editor absolute-fill"
             value={state.params.source}
