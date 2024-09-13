@@ -45,9 +45,17 @@ module.exports = {
       "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
     },
     setupMiddlewares: (middlewares, devServer) => {
+      // Add logging for middleware
+      devServer.app.use((req, res, next) => {
+        console.log("Request URL:", req.url);
+        next();
+      });
+
+      // Serve the start.html file
       devServer.app.get("/", (req, res) => {
         res.sendFile(path.resolve(__dirname, "public/start.html"));
       });
+
       return middlewares;
     },
   },
