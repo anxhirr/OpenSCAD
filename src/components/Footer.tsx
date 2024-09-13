@@ -1,4 +1,4 @@
-import { CSSProperties, useContext, useRef } from "react";
+import { useState, useEffect, CSSProperties, useContext, useRef } from "react";
 import { State } from "../state/app-state";
 import { ModelContext } from "./contexts";
 import * as monaco from "monaco-editor/esm/vs/editor/editor.api";
@@ -6,7 +6,6 @@ import { Button } from "primereact/button";
 import { Badge } from "primereact/badge";
 import { Menu } from "primereact/menu";
 import { Toast } from "primereact/toast";
-import HelpMenu from "./HelpMenu";
 import { confirmDialog } from "primereact/confirmdialog";
 import "./footer.css";
 
@@ -36,7 +35,6 @@ function downloadOutput(state: State) {
       accept: doDownload,
       acceptLabel: `Download ${fileName}`,
       rejectLabel: "Cancel",
-      // reject: () => {}
     });
   } else {
     doDownload();
@@ -47,6 +45,8 @@ export default function Footer({ style }: { style?: CSSProperties }) {
   const model = useContext(ModelContext);
   if (!model) throw new Error("No model");
   const state = model.state;
+
+  const [isRenderClicked, setIsRenderClicked] = useState(false);
 
   const helpMenu = useRef<Menu>(null);
   const toast = useRef<Toast>(null);
@@ -60,6 +60,7 @@ export default function Footer({ style }: { style?: CSSProperties }) {
     [monaco.MarkerSeverity.Info, "info"],
   ]);
   const markers = state.lastCheckerRun?.markers ?? [];
+
   const getBadge = (s: monaco.MarkerSeverity) => {
     const count = markers.filter((m) => m.severity == s).length;
     const sev =
@@ -73,9 +74,7 @@ export default function Footer({ style }: { style?: CSSProperties }) {
     return (
       <>
         {count > 0 && (
-          <Badge
-            value={count}
-            severity={severityByMarkerSeverity.get(s)}></Badge>
+          <Badge value={count} severity={severityByMarkerSeverity.get(s)} />
         )}
       </>
     );
@@ -86,15 +85,30 @@ export default function Footer({ style }: { style?: CSSProperties }) {
       ? undefined
       : markers.map((m) => m.severity).reduce((a, b) => Math.max(a, b));
 
+  // Handle Render button click
+  const handleRenderClick = () => {
+    setIsRenderClicked(true);
+    model.render({ isPreview: false, now: true });
+    setIsRenderClicked(false);
+  };
+
+  // Trigger loading on page reload
+  useEffect(() => {
+    setIsRenderClicked(true);
+    const timeoutId = setTimeout(() => {
+      setIsRenderClicked(false);
+    }, 4000);
+
+    return () => clearTimeout(timeoutId);
+  }, []);
+
   return (
     <div>
+      {/* Spinner only shows when the Render button is clicked or the page is loading */}
       <div
         className="inert"
         style={{
-          display:
-            state.rendering || state.previewing || state.checkingSyntax
-              ? "flex"
-              : "none",
+          display: isRenderClicked || state.rendering ? "flex" : "none",
         }}>
         <div className="spinner-square">
           <div className="square-1 square"></div>
@@ -116,7 +130,7 @@ export default function Footer({ style }: { style?: CSSProperties }) {
           ...(style ?? {}),
         }}>
         <Button
-          onClick={() => model.render({ isPreview: false, now: true })}
+          onClick={handleRenderClick}
           loading={state.rendering}
           icon="pi pi-refresh"
           title="Render the model (F6)."
@@ -133,16 +147,11 @@ export default function Footer({ style }: { style?: CSSProperties }) {
             }`}
             severity="secondary"
             text
-            // label={state.output.isPreview ? "preview.stl" : "render.stl"}
-            iconPos="right"
             onClick={() => downloadOutput(state)}
           />
         )}
         <span style={{ flex: 1 }}></span>
-
         <Toast ref={toast} />
-
-        <HelpMenu />
       </div>
     </div>
   );
