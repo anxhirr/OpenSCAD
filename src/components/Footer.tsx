@@ -48,7 +48,6 @@ export default function Footer({ style }: { style?: CSSProperties }) {
 
   const [isRenderClicked, setIsRenderClicked] = useState(false);
 
-  const helpMenu = useRef<Menu>(null);
   const toast = useRef<Toast>(null);
 
   const severityByMarkerSeverity = new Map<

@@ -1,8 +1,6 @@
 import { CSSProperties, useContext } from "react";
-import { TreeSelect } from "primereact/treeselect";
 import TreeNode from "primereact/treenode";
 import { ModelContext, FSContext } from "./contexts";
-// import { isFileWritable } from '../state/model';
 import { join } from "../fs/filesystem";
 import { defaultSourcePath } from "../state/initial-state";
 import { zipArchives } from "../fs/zip-archives";
