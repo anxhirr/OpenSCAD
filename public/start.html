@@ -27,7 +27,7 @@
                                 class="logo flex flex-shrink-0 items-center text-white hover:text-[#E730CA] transition-colors">
                                 <svg class="hidden md:block logo-svg transform hover: transition-transform duration-700"
                                     style="transform-style: preserve-3d" xmlns="http://www.w3.org/2000/svg" width="90"
-                                    height="70" viewBox="0 0 280 259">
+                                    height="90" viewBox="0 0 280 259">
                                     <g transform="translate(0.000000,259.000000) scale(0.100000,-0.100000)"
                                         fill="currentColor">
 
@@ -55,7 +55,7 @@
                                -320 92 -308 88 -303 89 376 89 512 0 560 -1 566 -17z" />
                                     </g>
                                 </svg>
-                                <svg xmlns="http://www.w3.org/2000/svg" class="md:hidden" width="50" height="50"
+                                <svg xmlns="http://www.w3.org/2000/svg" class="md:hidden" width="60" height="60"
                                     viewBox="0 0 280 259">
 
                                     <g transform="translate(0.000000,259.000000) scale(0.100000,-0.100000)"
@@ -88,12 +88,12 @@
                             </div>
                         </div>
 
-                        <div class="hidden min-[845px]:flex sm:space-x-8">
+                        <div style="height: 60px !important" class="hidden min-[845px]:flex sm:space-x-8">
                             <a href="#"
                                 class="relative text-[#E730CA] hover:text-[#E730CA] inline-flex items-center font-bold before:content-[''] before:absolute before:bottom-2.5 before:left-1/2 before:transform before:-translate-x-1/2 before:h-[1.5px] before:w-full before:bg-white"
                                 aria-current="page">Home</a>
-                            <a href="#"
-                                class="relative text-white hover:text-[#E730CA] inline-flex items-center font-bold before:content-[''] before:absolute before:bottom-2.5 before:left-1/2 before:transform before:-translate-x-1/2 before:h-[1.5px] before:w-0 before:bg-white before:transition-all before:hover:w-full before:duration-500">Marketplace</a>
+                            <a href="#hot-drops"
+                                class="relative text-white hover:text-[#E730CA] inline-flex items-center font-bold before:content-[''] before:absolute before:bottom-2.5 before:left-1/2 before:transform before:-translate-x-1/2 before:h-[1.5px] before:w-0 before:bg-white before:transition-all before:hover:w-full before:duration-500">Store</a>
                             <a href="#"
                                 class="relative text-white hover:text-[#E730CA] inline-flex items-center font-bold before:content-[''] before:absolute before:bottom-2.5 before:left-1/2 before:transform before:-translate-x-1/2 before:h-[1.5px] before:w-0 before:bg-white before:transition-all before:hover:w-full before:duration-500">Collections</a>
                             <a href="#"
@@ -284,9 +284,9 @@
                                                     </a>
                                                 </li>
                                                 <li>
-                                                    <a href="#"
+                                                    <a href="#hot-drops"
                                                         class="text-gray-300 hover:text-white hover:bg-[#E730CA]/80 group flex gap-x-3 rounded-md p-2 text-sm leading-6 font-semibold">
-                                                        Marketplace
+                                                        Store
                                                     </a>
                                                 </li>
                                                 <li>
@@ -526,10 +526,12 @@
             return Array.from(parent.children).indexOf(el) + 1
         }
     }" x-id="['tab']" class="px-6 lg:px-8">
-                        <h2 class="my-10 text-2xl sm:text-[2.5rem] font-semibold tracking-tight text-white">Hot
-                            Drops
-                            <span class="text-[#FF33DE]">For You! 🔥</span>
-                        </h2>
+                        <section id="hot-drops">
+                            <h2 class="my-10 text-2xl sm:text-[2.5rem] font-semibold tracking-tight text-white">Hot
+                                Drops
+                                <span class="text-[#FF33DE]">For You! 🔥</span>
+                            </h2>
+                        </section>
                         <!-- Tab List -->
                         <ul x-ref="tablist" @keydown.right.prevent.stop="$focus.wrap().next()"
                             @keydown.home.prevent.stop="$focus.first()" @keydown.page-up.prevent.stop="$focus.first()"
@@ -971,7 +973,7 @@
                         <a href="#" class="text-sm leading-6 text-gray-300 hover:text-gray-400">Home</a>
                     </div>
                     <div class="pb-6">
-                        <a href="#" class="text-sm leading-6 text-gray-300 hover:text-gray-400">Marketplace</a>
+                        <a href="#hot-drops" class="text-sm leading-6 text-gray-300 hover:text-gray-400">Store</a>
                     </div>
                     <div class="pb-6">
                         <a href="#" class="text-sm leading-6 text-gray-300 hover:text-gray-400">Collections</a>
