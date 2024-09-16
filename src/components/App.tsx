@@ -92,31 +92,24 @@ export function App({
   return (
     <ModelContext.Provider value={model}>
       <FSContext.Provider value={fs}>
-        <div
-          className="flex flex-column"
-          style={{
-            flex: 1,
-          }}>
+        <div className="flex flex-column" style={{ flex: 1 }}>
           <PanelSwitcher />
 
           <div
             className={mode === "multi" ? "flex flex-row" : "flex flex-column"}
             style={
-              mode === "multi"
-                ? { flex: 1 }
-                : {
-                    flex: 1,
-                    position: "relative",
-                  }
+              mode === "multi" ? { flex: 1 } : { flex: 1, position: "relative" }
             }>
             <EditorPanel
               className={`
-      opacity-animated
-      ${
-        layout.mode === "single" && layout.focus !== "editor" ? "opacity-0" : ""
-      }
-      ${layout.mode === "single" ? "panel-single" : ""}
-    `}
+                opacity-animated
+                ${
+                  layout.mode === "single" && layout.focus !== "editor"
+                    ? "opacity-0"
+                    : ""
+                }
+                ${layout.mode === "single" ? "panel-single" : ""}
+              `}
               style={getPanelStyle("editor")}
             />
             <ViewerPanel
@@ -125,14 +118,14 @@ export function App({
             />
             <CustomizerPanel
               className={`
-      opacity-animated
-      ${
-        layout.mode === "single" && layout.focus !== "customizer"
-          ? "opacity-0"
-          : ""
-      }
-      ${layout.mode === "single" ? "panel-single" : ""}
-    `}
+                opacity-animated
+                ${
+                  layout.mode === "single" && layout.focus !== "customizer"
+                    ? "opacity-0"
+                    : ""
+                }
+                ${layout.mode === "single" ? "panel-single" : ""}
+              `}
               style={getPanelStyle("customizer")}
             />
           </div>
