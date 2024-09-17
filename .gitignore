@@ -8,4 +8,3 @@ public/libraries/*
 !public/libraries/.gitkeep
 public/openscad.js
 public/openscad.wasm
-yarn.lock
