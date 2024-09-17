@@ -40,7 +40,7 @@ module.exports = {
     host: "0.0.0.0",
     allowedHosts: "all",
     headers: {
-      "Access-Control-Allow-Origin": "*", // Allow all origins
+      "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Headers": "X-Requested-With, content-type",
       "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
     },
@@ -50,12 +50,6 @@ module.exports = {
         console.log("Request URL:", req.url);
         next();
       });
-
-      // Serve the start.html file
-      devServer.app.get("/", (req, res) => {
-        res.sendFile(path.resolve(__dirname, "public/start.html"));
-      });
-
       return middlewares;
     },
   },
