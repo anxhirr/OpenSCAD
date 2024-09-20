@@ -3,5 +3,6 @@ version: "3.8"
 services:
   app:
     image: inert/scad:new
+    container_name: Scad-Playground
     ports:
       - "4000:4000"
