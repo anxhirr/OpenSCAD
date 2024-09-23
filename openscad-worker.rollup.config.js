@@ -1,6 +1,6 @@
-// import typescript from 'rollup-plugin-typescript';
 import typescript from "rollup-plugin-typescript2";
 import replace from "@rollup/plugin-replace";
+import { terser } from "rollup-plugin-terser";
 import packageConfig from "./package.json";
 
 const LOCAL_URL = process.env.LOCAL_URL ?? "http://localhost:4000/";
@@ -12,6 +12,7 @@ export default [
     output: {
       file: "dist/openscad-worker.js",
       format: "es",
+      sourcemap: process.env.NODE_ENV !== "production",
     },
     plugins: [
       typescript({
@@ -23,6 +24,11 @@ export default [
           process.env.NODE_ENV !== "production" ? LOCAL_URL : PUBLIC_URL
         ),
       }),
+      process.env.NODE_ENV === "production" && terser(),
     ],
+    onwarn(warning, warn) {
+      if (warning.code === "CIRCULAR_DEPENDENCY") return;
+      warn(warning);
+    },
   },
 ];
