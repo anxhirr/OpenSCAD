@@ -1,5 +1,6 @@
 const CopyPlugin = require("copy-webpack-plugin");
 const path = require("path");
+const TerserPlugin = require("terser-webpack-plugin");
 
 module.exports = {
   mode: "production",
@@ -21,6 +22,10 @@ module.exports = {
           },
         ],
       },
+      {
+        test: /\.(png|svg|jpg|jpeg|gif)$/i,
+        type: "asset/resource",
+      },
     ],
   },
   resolve: {
@@ -29,6 +34,7 @@ module.exports = {
   output: {
     filename: "index.js",
     path: path.resolve(__dirname, "dist"),
+    clean: true,
   },
   devServer: {
     static: {
@@ -45,13 +51,22 @@ module.exports = {
       "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
     },
     setupMiddlewares: (middlewares, devServer) => {
-      // Add logging for middleware
       devServer.app.use((req, res, next) => {
         console.log("Request URL:", req.url);
         next();
       });
       return middlewares;
     },
+  },
+  optimization: {
+    minimize: true,
+    minimizer: [new TerserPlugin()],
+  },
+  devtool: "source-map",
+  performance: {
+    hints: false,
+    maxAssetSize: Infinity,
+    maxEntrypointSize: Infinity,
   },
   plugins: [
     new CopyPlugin({
