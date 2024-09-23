@@ -73,14 +73,14 @@ Docker comands :
 
 ```bash
 
-docker build -t inert/scad:end . # this will build the docker img
+docker build -t inert/scad:end .
+docker tag inert/scad:end inert/scad:end
+docker push inert/scad:end
 
-docker tag inert/scad:end inert/scad:end  #this will tag the docekr img
+#pull
+docker pull inert/scad:end
 
-docker push inert/scad:end  # this will push the changes on the docker img
-
-docker pull inert/scad:end # this will pull the docker img
-
-docker run -p 4000:4000 --name Scad-Playground inert/scad:end # start the docker img
+#start
+docker run -p 4000:4000 --name Scad-Playground inert/scad:end
 
 ```
