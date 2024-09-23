@@ -21,7 +21,7 @@ RUN yarn install
 COPY . .
 
 RUN make public
-RUN yarn run build
+RUN npm run build:prod
 
 EXPOSE 4000
 
