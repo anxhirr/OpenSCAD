@@ -63,23 +63,11 @@ start for publish mode
 npm run start:prod
 ```
 
-   ┌──────────────────────────────────────────┐
-   │                                          │
-   │   Serving!                               │
-   │                                          │
-   │   - Local:    http://localhost:3000      │
-   │   - Network:  http://172.27.21.59:3000   │
-   │                                          │
-   │   Copied local address to clipboard!     │
-   │                                          │
-   └──────────────────────────────────────────┘
-
-
 buld test for publish
 
 ```bash
  npm run build:prod
- ```
+```
 
 Docker comands :
 
