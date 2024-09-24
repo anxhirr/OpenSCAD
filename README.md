@@ -81,6 +81,6 @@ docker push inert/scad:end
 docker pull inert/scad:end
 
 #start
-docker run -p 4000:4000 --name Scad-Playground inert/scad:end
+docker-compose up
 
 ```
