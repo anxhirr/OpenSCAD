@@ -72,15 +72,15 @@ buld test for publish
 Docker comands :
 
 ```bash
-
 docker build -t inert/scad:end .
 docker tag inert/scad:end inert/scad:end
 docker push inert/scad:end
+#run
+docker-compose up
+
 
 #pull
 docker pull inert/scad:end
-
-#start
-docker-compose up
-
+#run
+docker run -p 4000:4000 --name Scad-Playground inert/scad:end
 ```
