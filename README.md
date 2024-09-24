@@ -41,7 +41,7 @@ nvm install node
 
 sudo apt install unzip
 
-cd 3DSkai-OpenSCAD
+cd OpenSCAD
 
 yarn install
 
