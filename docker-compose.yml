@@ -2,7 +2,28 @@ version: "3.8"
 
 services:
   app:
-    image: inert/scad:end
+    build:
+      context: .
+      dockerfile: Dockerfile
     container_name: Scad-Playground
     ports:
       - "4000:4000"
+  nginx:
+    build:
+      context: .
+    container_name: nginx
+    volumes:
+      - ./nginx/nginx.conf.template:/etc/nginx/nginx.conf.template
+      - ./nginx/nginx-ssl.conf.template:/etc/nginx/nginx-ssl.conf.template
+      - ./nginx/letsencrypt-autogen.sh:/usr/local/bin/letsencrypt-autogen.sh
+      - letsencrypt:/OpenSCAD/nginx/letsencrypt
+      - ${WO_SSL_KEY}:/OpenSCAD/nginx/ssl/key.pem
+      - ${WO_SSL_CERT}:/OpenSCAD/nginx/ssl/cert.pem
+    ports:
+      - "80:80"
+      - "443:443"
+    restart: always
+
+volumes:
+  letsencrypt:
+    driver: local
