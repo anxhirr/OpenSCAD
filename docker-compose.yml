@@ -5,25 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    image: inert/scad:end
     container_name: Scad-Playground
     ports:
       - "4000:4000"
-  nginx:
-    build:
-      context: .
-    container_name: nginx
-    volumes:
-      - ./nginx/nginx.conf.template:/etc/nginx/nginx.conf.template
-      - ./nginx/nginx-ssl.conf.template:/etc/nginx/nginx-ssl.conf.template
-      - ./nginx/letsencrypt-autogen.sh:/usr/local/bin/letsencrypt-autogen.sh
-      - letsencrypt:/nginx/letsencrypt
-      - ${WO_SSL_KEY}:/nginx/ssl/key.pem
-      - ${WO_SSL_CERT}:/nginx/ssl/cert.pem
-    ports:
-      - "80:80"
-      - "443:443"
-    restart: always
-
-volumes:
-  letsencrypt:
-    driver: local

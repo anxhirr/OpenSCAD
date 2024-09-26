@@ -1,7 +1,0 @@
-# This configuration adds the volumes necessary for SSL manual setup
-version: "2.1"
-services:
-  webapp:
-    volumes:
-      - ${WO_SSL_KEY}:/nginx/ssl/key.pem
-      - ${WO_SSL_CERT}:/nginx/ssl/cert.pem

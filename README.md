@@ -33,6 +33,8 @@ sudo apt install wget
 
 sudo apt install make
 
+sudo apt install zip
+
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
 
 source ~/.bashrc
