@@ -10,65 +10,17 @@
 
 ## Building
 
-Prerequisites:
-
-- wget
-- GNU make
-- npm
-
-Local dev:
-
 On LINUX
 
 ```bash
-yarn install
-make public
-yarn start:dev
-```
+chmod +x ./scad.sh
 
-First Start :
+# For dev mode
+./scad.sh --dev
 
-```bash
-sudo apt install wget
 
-sudo apt install make
-
-sudo apt install zip
-
-curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | bash
-
-source ~/.bashrc
-
-nvm install node
-
-sudo apt install unzip
-
-cd OpenSCAD
-
-yarn install
-
-make public
-
-yarn start:dev
-
-```
-
-rebuild
-
-```bash
-yarn run build
-```
-
-start for publish mode
-
-```bash
-npm run start:prod
-```
-
-buld test for publish
-
-```bash
- npm run build:prod
+# For Production mode
+./scad.sh --prod
 ```
 
 Docker comands :
