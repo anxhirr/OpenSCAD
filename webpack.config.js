@@ -34,7 +34,9 @@ module.exports = {
   output: {
     filename: "index.js",
     path: path.resolve(__dirname, "dist"),
-    clean: true,
+    clean: {
+      keep: /openscad-worker\.js$/, // Use regex to keep the worker file
+    },
   },
   devServer: {
     static: {
@@ -49,13 +51,6 @@ module.exports = {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Headers": "X-Requested-With, content-type",
       "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
-    },
-    setupMiddlewares: (middlewares, devServer) => {
-      devServer.app.use((req, res, next) => {
-        console.log("Request URL:", req.url);
-        next();
-      });
-      return middlewares;
     },
   },
   optimization: {
