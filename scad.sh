@@ -6,14 +6,14 @@ usage() {
     exit 1
 }
 
-# Ensure setup.sh is executable and run it
-if [ -f "./setup.sh" ]; then
-    chmod +x ./setup.sh
-    ./setup.sh
+# Ensure start.sh is executable and run it
+if [ -f "./start.sh" ]; then
+    chmod +x ./start.sh
+    ./start.sh
 
-    # Check if setup.sh was successful
+    # Check if start.sh was successful
     if [ $? -ne 0 ]; then
-        echo "Error: setup.sh failed!"
+        echo "Error: start.sh failed!"
         exit 1
     fi
 
@@ -21,7 +21,7 @@ if [ -f "./setup.sh" ]; then
     source ~/.bashrc
 
 else
-    echo "Error: setup.sh not found!"
+    echo "Error: start.sh not found!"
     exit 1
 fi
 
@@ -31,7 +31,7 @@ if [ "$1" == "--dev" ]; then
     echo "--------------------------------------------------------"
     echo " "
 
-    yarn start
+    npm start
 
 elif [ "$1" == "--prod" ]; then
     echo "Running in production mode..."
@@ -39,7 +39,7 @@ elif [ "$1" == "--prod" ]; then
     echo " "
 
     npm run start:prod
-    
+
 else
     usage
 fi
