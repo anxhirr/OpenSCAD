@@ -25,7 +25,6 @@ if [ "$1" == "--dev" ]; then
     echo "Running in development mode..."
     echo "--------------------------------------------------------"
     echo " "
-
     npm start
 
 elif [ "$1" == "--prod" ]; then
@@ -38,6 +37,7 @@ elif [ "$1" == "--prod" ]; then
     echo " "
     npm run build:prod
 
+    echo "--------------------------------------------------------"
     echo " Start the production mode "
     echo " "
     npm run start:prod
