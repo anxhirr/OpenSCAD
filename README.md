@@ -10,9 +10,11 @@
 
 ## Building
 
-On LINUX
+Start On LINUX
 
 ```bash
+dos2unix *.sh
+
 chmod +x ./scad.sh
 
 # For dev mode
