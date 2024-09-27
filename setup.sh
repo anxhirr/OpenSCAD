@@ -34,3 +34,6 @@ yarn install
 
 # Run the 'make public' command
 make public
+
+#test build comand
+yarn run build:prod
