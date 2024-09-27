@@ -13,6 +13,3 @@ export NVM_DIR="$HOME/.nvm"
 
 # Install Node.js using NVM
 nvm install node
-
-# Run the production build command
-npm run build:prod

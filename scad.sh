@@ -37,8 +37,12 @@ elif [ "$1" == "--prod" ]; then
     echo "Running in production mode..."
     echo "--------------------------------------------------------"
     echo " "
+    echo "Test and Build  the  production mode..."
+    npm run build:prod
 
+    echo " Start the production mode "
     npm run start:prod
+    
 
 else
     usage
