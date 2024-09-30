@@ -28,15 +28,15 @@ chmod +x ./scad.sh
 Docker comands :
 
 ```bash
-docker build -t inert/scad:end .
-docker tag inert/scad:end inert/scad:end
-docker push inert/scad:end
+docker build -t inert/scad:server .
+docker tag inert/scad:server inert/scad:server
+docker push inert/scad:server
 #run
 docker-compose up
 
 
 #pull
-docker pull inert/scad:end
+docker pull inert/scad:server
 #run
-docker run -p 4000:4000 --name Scad-Playground inert/scad:end
+docker run -p 3000:3000 --name Scad-Playground inert/scad:server
 ```
