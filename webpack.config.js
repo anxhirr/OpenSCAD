@@ -35,7 +35,7 @@ module.exports = {
     filename: "index.js",
     path: path.resolve(__dirname, "dist"),
     clean: {
-      keep: /openscad-worker\.js$/, // Use regex to keep the worker file
+      keep: /openscad-worker\.js$/,
     },
   },
   devServer: {
@@ -44,7 +44,7 @@ module.exports = {
       publicPath: "/",
     },
     compress: true,
-    port: 4000,
+    port: 3000,
     host: "0.0.0.0",
     allowedHosts: "all",
     headers: {
