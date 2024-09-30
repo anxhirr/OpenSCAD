@@ -3,8 +3,8 @@ import replace from "@rollup/plugin-replace";
 import { promises as fs } from "fs";
 import path from "path";
 
-const LOCAL_URL = process.env.LOCAL_URL ?? "http://172.27.21.59:3000/";
-const PUBLIC_URL = process.env.PUBLIC_URL ?? "http://172.27.21.59:3000/";
+const LOCAL_URL = process.env.LOCAL_URL ?? "http://172.27.21.59:4000/";
+const PUBLIC_URL = process.env.PUBLIC_URL ?? "http://192.168.40.14:3000/";
 
 export default [
   {
@@ -30,12 +30,19 @@ export default [
           const distDir = path.resolve(__dirname, "dist");
           const workerFile = path.join(distDir, "openscad-worker.js");
 
-          // Check if the worker files exist and log a message if they do
+          // Ensure the dist directory exists
+          try {
+            await fs.mkdir(distDir, { recursive: true });
+          } catch (err) {
+            console.error("Error creating dist directory:", err);
+          }
+
+          // Check if the worker file exists and log accordingly
           try {
             await fs.access(workerFile);
-            console.log("Worker files found, skipping overwrite.");
+            console.log("Worker file exists, skipping copy.");
           } catch (err) {
-            console.log("Worker files not found, they will be created.");
+            console.log("Worker file not found, creating new one.");
           }
         },
       },
