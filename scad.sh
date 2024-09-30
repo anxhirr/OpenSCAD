@@ -25,7 +25,7 @@ if [ "$1" == "--dev" ]; then
     echo "Running in development mode..."
     echo "--------------------------------------------------------"
     echo " "
-    npm start:dev
+    npm run start:dev
 
 elif [ "$1" == "--prod" ]; then
     echo " "
