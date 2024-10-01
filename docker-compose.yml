@@ -5,7 +5,7 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
-    image: inert/scad:end
+    image: inert/scad:server
     container_name: Scad-Playground
     ports:
       - "3000:3000"
