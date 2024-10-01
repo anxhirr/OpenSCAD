@@ -1,70 +1,77 @@
-const CopyPlugin = require("copy-webpack-plugin");
-const path = require("path");
-const TerserPlugin = require("terser-webpack-plugin");
+const CopyPlugin = require('copy-webpack-plugin')
+const path = require('path')
+const TerserPlugin = require('terser-webpack-plugin')
+
+const NODE_ENV = process.env.NODE_ENV
+
+const DEV_PORT = 3000
+const PROD_PORT = 4000
+
+const PORT = NODE_ENV === 'production' ? PROD_PORT : DEV_PORT
 
 module.exports = {
-  mode: "production",
-  entry: "./src/index.tsx",
+  mode: 'production',
+  entry: './src/index.tsx',
   module: {
     rules: [
       {
         test: /\.tsx?$/,
-        use: "ts-loader",
+        use: 'ts-loader',
         exclude: /node_modules/,
       },
       {
         test: /\.css$/i,
         use: [
-          "style-loader",
+          'style-loader',
           {
-            loader: "css-loader",
+            loader: 'css-loader',
             options: { url: false },
           },
         ],
       },
       {
         test: /\.(png|svg|jpg|jpeg|gif)$/i,
-        type: "asset/resource",
+        type: 'asset/resource',
       },
     ],
   },
   resolve: {
-    extensions: [".tsx", ".ts", ".js"],
+    extensions: ['.tsx', '.ts', '.js'],
   },
   output: {
-    filename: "index.js",
-    path: path.resolve(__dirname, "dist"),
+    filename: 'index.js',
+    path: path.resolve(__dirname, 'dist'),
     clean: {
       keep: /openscad-worker\.js$/,
     },
   },
   devServer: {
     static: {
-      directory: path.join(__dirname, "dist"),
-      publicPath: "/",
+      directory: path.join(__dirname, 'dist'),
+      publicPath: '/',
     },
     compress: true,
-    port: 4000,
-    host: "0.0.0.0",
-    allowedHosts: "all",
+    port: PORT,
+    host: '0.0.0.0',
+    allowedHosts: 'all',
     headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Headers": "X-Requested-With, content-type",
-      "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': 'X-Requested-With, content-type',
+      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, OPTIONS',
     },
     setupMiddlewares: (middlewares, devServer) => {
       devServer.app.use((req, res, next) => {
-        console.log("Request URL:", req.url);
-        next();
-      });
-      return middlewares;
+        console.log('Request URL:', req.url)
+        next()
+      })
+      return middlewares
     },
   },
   optimization: {
     minimize: true,
     minimizer: [new TerserPlugin()],
   },
-  devtool: "source-map",
+  devtool: 'source-map',
   performance: {
     hints: false,
     maxAssetSize: Infinity,
@@ -74,22 +81,22 @@ module.exports = {
     new CopyPlugin({
       patterns: [
         {
-          from: path.resolve(__dirname, "public"),
-          to: path.resolve(__dirname, "dist"),
+          from: path.resolve(__dirname, 'public'),
+          to: path.resolve(__dirname, 'dist'),
         },
         {
-          from: path.resolve(__dirname, "node_modules/primeicons/fonts"),
-          to: path.resolve(__dirname, "dist/fonts"),
+          from: path.resolve(__dirname, 'node_modules/primeicons/fonts'),
+          to: path.resolve(__dirname, 'dist/fonts'),
         },
         {
-          from: path.resolve(__dirname, "src/wasm/openscad.js"),
-          to: path.resolve(__dirname, "dist/openscad.js"),
+          from: path.resolve(__dirname, 'src/wasm/openscad.js'),
+          to: path.resolve(__dirname, 'dist/openscad.js'),
         },
         {
-          from: path.resolve(__dirname, "src/wasm/openscad.wasm"),
-          to: path.resolve(__dirname, "dist/openscad.wasm"),
+          from: path.resolve(__dirname, 'src/wasm/openscad.wasm'),
+          to: path.resolve(__dirname, 'dist/openscad.wasm'),
         },
       ],
     }),
   ],
-};
+}

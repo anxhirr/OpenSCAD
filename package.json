@@ -20,14 +20,8 @@
     "three": "^0.140.0"
   },
   "scripts": {
-    "start:dev": "LOCAL_URL=http://172.27.21.59:4000/ npx webpack serve --config webpack.config.js --env development",
-    "start": "concurrently 'LOCAL_URL=http://172.27.21.59:4000/ npx webpack serve --mode=development' 'NODE_ENV=development npx rollup --config openscad-worker.rollup.config.js --watch'",
-    "start:prod": "cross-env PUBLIC_URL=http://192.168.40.14:3000/ npm run build && npx serve dist",
-    "build": "NODE_ENV=production npx rollup --config openscad-worker.rollup.config.js && webpack --mode=production",
-    "build:prod": "NODE_ENV=production npm run build",
-    "prebuild": "rimraf dist",
-    "postbuild": "echo Build completed!",
-    "lint": "eslint 'src/**/*.{js,ts,tsx}'"
+    "start:dev": "cross-env NODE_ENV=development concurrently 'npx webpack serve' 'npx rollup --config openscad-worker.rollup.config.js --watch'",
+    "start:prod": "cross-env NODE_ENV=production concurrently 'npx webpack serve' 'npx rollup --config openscad-worker.rollup.config.js --watch'"
   },
   "eslintConfig": {
     "extends": [
