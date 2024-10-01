@@ -52,6 +52,13 @@ module.exports = {
       "Access-Control-Allow-Headers": "X-Requested-With, content-type",
       "Access-Control-Allow-Methods": "GET, POST, PUT, DELETE, OPTIONS",
     },
+    setupMiddlewares: (middlewares, devServer) => {
+      devServer.app.use((req, res, next) => {
+        console.log("Request URL:", req.url);
+        next();
+      });
+      return middlewares;
+    },
   },
   optimization: {
     minimize: true,
