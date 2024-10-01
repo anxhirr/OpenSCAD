@@ -10,7 +10,7 @@ const PROD_PORT = 4000
 const PORT = NODE_ENV === 'production' ? PROD_PORT : DEV_PORT
 
 module.exports = {
-  mode: 'production',
+  mode: NODE_ENV,
   entry: './src/index.tsx',
   module: {
     rules: [
