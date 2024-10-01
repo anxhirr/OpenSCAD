@@ -15,10 +15,9 @@ RUN curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.2/install.sh | b
     && nvm install node
 
 COPY package*.json ./
-COPY yarn.lock ./
 COPY . .
 
-RUN yarn install
+RUN npm i
 
 RUN make public
 RUN npm run build:prod
