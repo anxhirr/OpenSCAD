@@ -13,6 +13,11 @@ import {
 import { bubbleUpDeepMutations } from "./deep-mutate";
 import { formatBytes, formatMillis } from "../utils";
 
+const LAYOUT_MODE = {
+  SINGLE: "single" as const,
+  MULTI: "multi" as const,
+};
+
 export class Model {
   constructor(
     private fs: FS,
@@ -28,14 +33,14 @@ export class Model {
       !this.state.previewing &&
       !this.state.checkingSyntax &&
       !this.state.rendering &&
-      this.state.params.source.trim() != ""
+      this.state.params.source.trim() !== ""
     ) {
       // Determine the mode and focus based on screen width
       const isSmallScreen = window.matchMedia("(max-width: 600px)").matches;
 
       this.mutate((s) => {
         s.view.layout = {
-          mode: "single",
+          mode: LAYOUT_MODE.SINGLE,
           focus: isSmallScreen
             ? "viewer" // Set focus to "viewer" on small screens (<= 600px)
             : ("customizer" as SingleLayoutComponentId), // Otherwise, keep it "customizer"
@@ -48,14 +53,14 @@ export class Model {
 
   private setState(state: State) {
     this.state = state;
-    this.statePersister && this.statePersister.set(state);
-    this.setStateCallback && this.setStateCallback(state);
+    this.statePersister?.set(state);
+    this.setStateCallback?.(state);
   }
 
   mutate(f: (state: State) => void) {
     const mutated = bubbleUpDeepMutations(this.state, f);
     // No matter how deep the mutation happened, the top-level object's identity
-    // will have changed iff the mutated values are different.
+    // will have changed if the mutated values are different.
     if (mutated !== this.state) {
       this.setState(mutated);
       return true;
@@ -64,7 +69,7 @@ export class Model {
     return false;
   }
 
-  setVar(name: string, value: any) {
+  setVar(name: string, value: string | number | boolean | object | null) {
     this.mutate(
       (s) => (s.params.vars = { ...(s.params.vars ?? {}), [name]: value })
     );
@@ -73,7 +78,7 @@ export class Model {
 
   set logsVisible(value: boolean) {
     if (value) {
-      if (this.state.view.layout.mode === "single") {
+      if (this.state.view.layout.mode === LAYOUT_MODE.SINGLE) {
         this.changeSingleVisibility("editor");
       } else {
         this.changeMultiVisibility("editor", true);
@@ -83,28 +88,28 @@ export class Model {
   }
 
   isComponentFullyVisible(id: SingleLayoutComponentId) {
-    if (this.state.view.layout.mode === "multi") {
+    if (this.state.view.layout.mode === LAYOUT_MODE.MULTI) {
       return this.state.view.layout[id];
     } else {
       return this.state.view.layout.focus === id;
     }
   }
 
-  changeLayout(mode: "multi" | "single") {
+  changeLayout(mode: typeof LAYOUT_MODE[keyof typeof LAYOUT_MODE]) {
     if (this.state.view.layout.mode === mode) return;
 
     this.mutate((s) => {
-      if (s.view.layout.mode === "multi") {
+      if (s.view.layout.mode === LAYOUT_MODE.MULTI) {
         // Transitioning from multi to single mode
         s.view.layout = {
-          mode: "single",
+          mode: LAYOUT_MODE.SINGLE,
           focus: "customizer", // Set the default or desired focus for single mode
         };
       } else {
         // Transitioning from single to multi mode
         const currentFocus = s.view.layout.focus as SingleLayoutComponentId;
         s.view.layout = {
-          mode: "multi",
+          mode: LAYOUT_MODE.MULTI,
           editor: currentFocus === "editor",
           viewer: currentFocus === "viewer",
           customizer: currentFocus === "customizer",
@@ -115,7 +120,7 @@ export class Model {
 
   changeSingleVisibility(focus: SingleLayoutComponentId) {
     this.mutate((s) => {
-      if (s.view.layout.mode !== "single") throw new Error("Wrong mode");
+      if (s.view.layout.mode !== LAYOUT_MODE.SINGLE) throw new Error("Wrong mode");
       s.view.layout.focus = focus;
       if (focus !== "editor") {
         s.view.logs = false;
@@ -125,16 +130,15 @@ export class Model {
 
   changeMultiVisibility(target: MultiLayoutComponentId, visible: boolean) {
     this.mutate((s) => {
-      if (s.view.layout.mode !== "multi") throw new Error("Wrong mode");
+      if (s.view.layout.mode !== LAYOUT_MODE.MULTI) throw new Error("Wrong mode");
       s.view.layout[target] = visible;
       if (
         (s.view.layout.customizer ? 1 : 0) +
-          (s.view.layout.editor ? 1 : 0) +
-          (s.view.layout.viewer ? 1 : 0) ==
+        (s.view.layout.editor ? 1 : 0) +
+        (s.view.layout.viewer ? 1 : 0) ===
         0
       ) {
         // Select at least one panel
-        // s.view.layout.editor = true;
         s.view.layout[target] = !visible;
         if (target === "editor" && !visible) {
           s.view.logs = false;
@@ -150,7 +154,7 @@ export class Model {
         s.params.source = new TextDecoder("utf-8").decode(
           this.fs.readFileSync(path)
         );
-        if (s.params.sourcePath != path) {
+        if (s.params.sourcePath !== path) {
           s.params.sourcePath = path;
           s.lastCheckerRun = undefined;
           s.output = undefined;
@@ -173,13 +177,11 @@ export class Model {
 
   private processSource() {
     const params = this.state.params;
-    // if (isFileWritable(params.sourcePath)) {
-    // const absolutePath = params.sourcePath.startsWith('/') ? params.sourcePath : `/${params.sourcePath}`;
     this.fs.writeFile(params.sourcePath, params.source);
-    // }
     this.checkSyntax();
     this.render({ isPreview: true, now: false });
   }
+
   checkSyntax() {
     this.mutate((s) => (s.checkingSyntax = true));
     checkSyntax(
@@ -191,6 +193,7 @@ export class Model {
         this.mutate((s) => {
           if (err != null) {
             console.error("Error while checking syntax:", err);
+            // Consider additional error handling here
           } else {
             s.lastCheckerRun = checkerRun;
             s.parameterSet = checkerRun?.parameterSet;
@@ -212,7 +215,7 @@ export class Model {
 
     const { source, sourcePath, vars, features } = this.state.params;
 
-    render({ source, sourcePath, vars, features, extraArgs: [], isPreview })({
+    render({ source, sourcePath, vars, features, extraArgs: [], isPreview })( {
       now,
       callback: (output, err) => {
         this.mutate((s) => {
@@ -220,8 +223,8 @@ export class Model {
           if (err != null) {
             console.error(
               "Error while doing " +
-                (isPreview ? "preview" : "rendering") +
-                ":",
+              (isPreview ? "preview" : "rendering") +
+              ":",
               err
             );
             s.error = `${err}`;
